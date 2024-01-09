@@ -68,18 +68,18 @@ class ProductsController extends GetxController {
   }
 
   //show bottom sheet
-  void productBottomSheet(Products product){
-    Get.bottomSheet(
+  // void productBottomSheet(Products product){
+  //   Get.bottomSheet(
 
-      Container(
-        height: 450,
-        child: ProductsView(product)),
-      //higet
-      isScrollControlled: true,
+  //     Container(
+  //       height: 400,
+  //       child: ProductsView(product)),
+  //     //higet
+  //     isScrollControlled: true,
 
-    );
+  //   );
 
-  }
+  // }
 
   //get local title {en,ar,urdo,bangla}
   String getLocalTitle(Products product) {

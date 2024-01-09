@@ -9,10 +9,10 @@ static const String APP_NAME = "Flutter Demo";
 static const String APP_VERSION = "1.0.0";
 static const Token="";
 //api
-// static const String API_BASE_URL = "http://127.0.0.1:8000/api";
+// static const String API_BASE_URL = "http://192.168.1.105:8000/api";
 static const String API_BASE_URL = "https://scrap.alhiwri.com/public/api";
 //image 
-// static const String IMAGE_BASE_URL = "http://127.0.0.1:8000/storage/";
+// static const String IMAGE_BASE_URL = "http://192.168.1.105:8000/storage/";
 static const String IMAGE_BASE_URL = "https://scrap.alhiwri.com/public/storage/";
 //products
 static const String PRODUCTS_URI = "/products";
@@ -45,6 +45,12 @@ static const String UPDATE_ORDER_STATUS_URI = "/order/";
 static const String CUSTOMER_INFO_URI = "/auth/customer";
 //update quantity
 static const String UPDATE_QUANTITY_URI = "/cart/";
+//app settings
+static const String APP_SETTINGS_URI = "/app-settings";
+//otp
+static const String OTP_URI = "/otp";
+//resend otp
+static const String RESEND_OTP_URI = "/resend-otp";
 
 
 

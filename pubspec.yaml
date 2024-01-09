@@ -42,6 +42,12 @@ dependencies:
   persistent_bottom_nav_bar: ^5.0.2
   geolocator: ^9.0.2
   geocoding: ^2.1.0
+  webview_flutter: ^4.2.2
+  url_launcher: ^6.1.11
+  google_maps_flutter: ^2.3.0
+  carousel_slider: ^4.2.1
+  flutter_otp_text_field: ^1.1.1
+  phone_text_field: ^0.0.4
 
 dev_dependencies:
   flutter_test:

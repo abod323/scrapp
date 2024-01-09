@@ -43,10 +43,11 @@ class CartRepo{
       throw Exception('Failed to update quantity');
     }
   }
-  Future addToCart(int productId,int quantity,int product_price) async {
+  Future addToCart(Products product,int quantity) async {
+    
  
     final response = await apiClinet.postData(AppConstants.CART_URI, {
-      "product_id": productId,
+      "product_id": product.id,
       "quantity": quantity,
      
 

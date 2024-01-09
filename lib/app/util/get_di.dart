@@ -13,6 +13,7 @@ import '../data/repository/product_repo.dart';
 import '../data/repository/settings_repo.dart';
 import '../modules/Cart/controllers/cart_controller.dart';
 import '../modules/Category/controllers/category_controller.dart';
+import '../modules/Loction/controllers/loction_controller.dart';
 import '../modules/Login/controllers/login_controller.dart';
 import '../modules/Order/controllers/order_controller.dart';
 import '../modules/Products/controllers/products_controller.dart';
@@ -36,7 +37,7 @@ class AppDi {
     Get.put<CartRepo>(CartRepo(apiClinet: Get.find(), prefs: Get.find()));
     Get.put<SettingsRepo>(SettingsRepo(apiClinet: Get.find(), prefs: Get.find()));
     Get.put<OrderRepo>(OrderRepo(apiClinet: Get.find(), prefs: Get.find()));
-
+  
 
     //controller
     Get.put<LoginController>(LoginController());
@@ -55,10 +56,14 @@ class AppDi {
     //profile
     Get.lazyPut<ProfileController>(() => ProfileController());
     //search
-    Get.lazyPut<SearchController>(() => SearchController());
+    Get.lazyPut<CustomSearchController>(() => CustomSearchController());
+    //location
+    Get.lazyPut<LoctionController>(() => LoctionController());
 
 
 
+   //call app settings
+    Get.find<SettingsController>().appsettings= await Get.find<SettingsRepo>().getAppSettings();
     
 
     

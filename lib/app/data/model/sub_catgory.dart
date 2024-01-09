@@ -39,8 +39,8 @@ class Subcatgories {
         updatedAt: DateTime.parse(json["updated_at"]),
         categoryId: json["category_id"],
         nameAr: json["name_ar"],
-        nameUrdo: json["name_ur"],
-        nameBang: json["name_bn"],
+        nameUrdo: json["name_ur"]??'',
+        nameBang: json["name_bn"]??'',
     );
 
     Map<String, dynamic> toJson() => {

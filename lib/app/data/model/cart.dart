@@ -11,7 +11,7 @@ Map<String, dynamic> cartToJson(Cart data) => data.toJson();
 class Cart {
     bool status;
     List<CartElement> cart;
-    int totalPrices;
+    double totalPrices;
 
     Cart({
         required this.status,
@@ -22,7 +22,7 @@ class Cart {
     factory Cart.fromJson(Map<String, dynamic> json) => Cart(
         status: json["status"],
         cart: List<CartElement>.from(json["cart"].map((x) => CartElement.fromJson(x))),
-        totalPrices: json["total_prices"],
+        totalPrices: double.parse(json["total_prices"].toString()),
     );
 
     Map<String, dynamic> toJson() => {
@@ -39,8 +39,8 @@ class CartElement {
     DateTime updatedAt;
     DateTime createdAt;
     int quantity;
-    int price;
-    Product product;
+    double price;
+    Products product;
 
     CartElement({
         required this.id,
@@ -59,9 +59,9 @@ class CartElement {
         productId: json["product_id"],
         updatedAt: DateTime.parse(json["updated_at"]),
         createdAt: DateTime.parse(json["created_at"]),
-        price: json["price"],
+        price: double.parse(json["price"].toString()),
         quantity: json["quantity"],
-        product: Product.fromJson(json["product"]),
+        product: Products.fromJson(json["product"]),
     );
 
     Map<String, dynamic> toJson() => {
@@ -76,7 +76,7 @@ class CartElement {
     };
 }
 
-class Product {
+class Products {
     int id;
     String name;
     dynamic nameAr;
@@ -94,7 +94,7 @@ class Product {
     int subcategoryId;
     int categoryId;
 
-    Product({
+    Products({
         required this.id,
         required this.name,
         this.nameAr,
@@ -113,7 +113,7 @@ class Product {
         required this.categoryId,
     });
 
-    factory Product.fromJson(Map<String, dynamic> json) => Product(
+    factory Products.fromJson(Map<String, dynamic> json) => Products(
         id: json["id"],
         name: json["name"],
         nameAr: json["name_ar"],

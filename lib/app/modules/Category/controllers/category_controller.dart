@@ -53,11 +53,8 @@ class CategoryController extends GetxController {
     if (Get.locale!.languageCode == 'en') {
       return categories[index].nameEn;
     } else if (Get.locale!.languageCode == 'ar') {
-      return categories[index].nameAr==null?categories[index].nameEn:categories[index].nameAr;
-    } else if (Get.locale!.languageCode == 'ur') {
-      return categories[index].nameUrdo==null?categories[index].nameEn:categories[index].nameUrdo;
-    } else if (Get.locale!.languageCode == 'bn') {
-      return categories[index].nameBang==null?categories[index].nameEn:categories[index].nameBang;
+      return categories[index].nameAr??categories[index].nameEn;
+  
     } else {
       return categories[index].nameEn;
     }
@@ -68,10 +65,6 @@ class CategoryController extends GetxController {
       return subcategories[index].nameEn;
     } else if (Get.locale!.languageCode == 'ar') {
       return subcategories[index].nameAr==null?subcategories[index].nameEn:subcategories[index].nameAr;
-    } else if (Get.locale!.languageCode == 'ur') {
-      return subcategories[index].nameUrdo==null?subcategories[index].nameEn:subcategories[index].nameUrdo;
-    } else if (Get.locale!.languageCode == 'bn') {
-      return subcategories[index].nameBang==null?subcategories[index].nameEn:subcategories[index].nameBang;
     } else {
       return subcategories[index].nameEn;
     }

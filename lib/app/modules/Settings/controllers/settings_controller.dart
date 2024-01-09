@@ -1,18 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+import '../../../data/model/app_settings.dart';
 import '../../../data/repository/auth_repo.dart';
 import '../../../widget/styles.dart';
 import '../../Login/views/login_view.dart';
 
 class SettingsController extends GetxController {
   //TODO: Implement SettingsController
+  List<AppSettings>? appsettings;
 
   final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
+  
   }
+
+  Future<void> launchURL(String url) async {
+   Uri _url = Uri.parse(url);
+  if (!await launchUrl(_url,mode: LaunchMode.externalApplication)) {
+    throw Exception('Could not launch $_url');
+  }
+}
 
   @override
   void onReady() {

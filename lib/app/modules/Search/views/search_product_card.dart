@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+
 import 'package:get/get.dart';
 import 'package:sacrapapp/app/data/model/products.dart';
 
@@ -24,7 +24,7 @@ class SearchProductCard extends StatelessWidget {
                 onTap: () {
                 //  Get.to(ProductsView(controller.products));
                 //   // print(controller.products[index].id);
-                controller.productBottomSheet(products);
+                // controller.productBottomSheet(products);
 
                 },
                 child: Container(
@@ -113,7 +113,7 @@ class SearchProductCard extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: GestureDetector(
                           onTap: () {
-                            cartController.addToCart(products.id,1,int.parse(products.price.toString()));
+                            // cartController.addToCart(products);
                           },
                           child: Icon(
                             Icons.add_shopping_cart,

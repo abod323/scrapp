@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:sacrapapp/app/data/api/api_clinet.dart';
+import 'package:sacrapapp/app/data/model/cart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../util/app_constant.dart';
@@ -31,9 +34,22 @@ final ApiClinet apiClinet;
   }
 
   //place order
-  Future placeOrder() async {
-    final response = await apiClinet.postData(AppConstants.ORDER_URI,{
+  Future placeOrder(String payment_method,String vehicle_type,String status,double total,Cart cart) async {
+    //get products id and quantity
+    List<Map<String, dynamic>> products = [];
+    cart.cart.forEach((element) {
+      products.add({
+        "product_id": element.product.id,
+        "quantity": element.quantity,
+      });
+    });
     
+    final response = await apiClinet.postData(AppConstants.ORDER_URI,{
+    'payment_method': payment_method,
+    'vehicle_type': vehicle_type,
+    'total': total,
+    'products': jsonEncode(products),
+    'status':status
     }
     ,headers: {
        "Content-Type": "application/json",

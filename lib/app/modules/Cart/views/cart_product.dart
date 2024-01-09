@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+
 import 'package:get/get.dart';
 import 'package:sacrapapp/app/modules/Products/controllers/products_controller.dart';
 import 'package:sacrapapp/app/util/app_constant.dart';
@@ -12,11 +12,11 @@ import '../controllers/cart_controller.dart';
 
 
 class CartProduct extends StatefulWidget {
-  final Product products;
-  final int quantity;
-  final int total;
+  final Products products;
+
+  final double total;
   final int CartId;
-  const CartProduct({super.key, required this.products, required this.quantity, required this.total, required this.CartId});
+  const CartProduct({super.key, required this.products, required this.total, required this.CartId});
 
   @override
   State<CartProduct> createState() => _CartProductState();
@@ -25,16 +25,18 @@ class CartProduct extends StatefulWidget {
 
 
 class _CartProductState extends State<CartProduct> {
-  int quantity=1;
-  int price=0;
+
+  double price=0;
+var products_controller=Get.put(ProductsController());
+
 
 var cartController=Get.put(CartController());
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    quantity=widget.quantity;
-    price=int.parse(widget.products.price.toString());
+ 
+    price=double.parse(widget.products.price.toString());
     
   }
   @override
@@ -60,7 +62,7 @@ var cartController=Get.put(CartController());
           key: Key(widget.products.id.toString()),
           direction: DismissDirection.endToStart,
           onDismissed: (direction) {
-            cartController.deleteProductFromCart(widget.CartId);
+            cartController.deleteProductFromCart(widget.products.id);
           },
           child: Container(
                   padding: const EdgeInsets.all(12.0),
@@ -70,9 +72,20 @@ var cartController=Get.put(CartController());
                   child: Row(
                     children: [
                       //image
-                      const SizedBox(
-                        width: 10,
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: GestureDetector(
+                              onTap: () {
+                                cartController.deleteProductFromCart(widget.products.id);
+                              },
+                              child: Icon(
+                                Icons.close,
+                                color: Colors.red,
+                                size: 20,
+                              ),
+                            ),
                       ),
+                      
                       Container(
                         height: 45,
                         width: 45,
@@ -96,7 +109,7 @@ var cartController=Get.put(CartController());
                           Container(
                             width: 150,
                             child: Text(
-                              widget.products.name,
+                              cartController.getLocalTitle(widget.products),
                               maxLines: 1,
                               
                               style: TextStyle(
@@ -151,37 +164,36 @@ var cartController=Get.put(CartController());
                               GestureDetector(
                                 onTap: () {
                                  //no less than 1
-                                  if(quantity>1){
-                                    setState(() {
-                                      // cartController.cartlodding.value=true;
-                                      quantity--;
-                                      cartController.total_price.value=cartController.total_price.value-price;
-                                      cartController.cartRepo.updateQuantity(widget.CartId, quantity).then((value)=>cartController.cartlodding.value=false);
-                                      
-                                    });
-                                  }
+                                   if(cartController.getQuantity(widget.products.id).value>1){
+                                  // setState(() {
+                                  //   // cartController.cartlodding.value=true;
+                                  //   quantity--;
+                                  //   cartController.total_price.value=cartController.total_price.value-price;
+                                  //   cartController.cartRepo.updateQuantity(widget.CartId, quantity).then((value)=>cartController.cartlodding.value=false);
+                                    
+                                  // });
+                                   print(cartController.getQuantity(widget.products.id));
+                                  cartController.decreaseQuantity(widget.products.id);
+                                }
                                 },
                                 child: Icon(
                                   Icons.remove,
                                   size: 20,
                                 ),
                               ),
-                              Text(
-                               quantity.toString(),
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.grey[900],
-                                ),
+                              Obx(() => Text(
+                             cartController.cartlodding.value?
+                              "0":cartController.getQuantity(widget.products.id).value.toString(),
+                             
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey[900],
                               ),
+                            ),),
                               GestureDetector(
                                 onTap: () {
-                                  setState(() {
-                                    // cartController.cartlodding.value=true;
-                                    quantity++;
-                                    cartController.total_price.value=cartController.total_price.value+price;
-                                    cartController.cartRepo.updateQuantity(widget.CartId, quantity).then((value) => cartController.cartlodding.value=false);
-                                  });
+                                  cartController.increaseQuantity(widget.products.id);
                                 },
                                 child: Icon(
                                   Icons.add,

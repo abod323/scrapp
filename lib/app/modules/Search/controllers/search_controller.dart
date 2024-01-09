@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:sacrapapp/app/data/model/products.dart';
 import 'package:sacrapapp/app/modules/Products/controllers/products_controller.dart';
 
-class SearchController extends GetxController {
+class CustomSearchController extends GetxController {
   //TODO: Implement SearchController
 
 //controller

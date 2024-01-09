@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 
 class LoctionController extends GetxController {
   //TODO: Implement LoctionController
-
+var currentAddress=''.obs;
   final count = 0.obs;
   @override
   void onInit() {

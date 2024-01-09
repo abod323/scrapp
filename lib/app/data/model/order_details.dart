@@ -6,21 +6,19 @@ import 'dart:convert';
 
 OrdersDetails ordersDetailsFromJson(Map<String,dynamic> str) => OrdersDetails.fromJson(str);
 
-Map<String,dynamic> ordersDetailsToJson(OrdersDetails data) => data.toJson();
+String ordersDetailsToJson(OrdersDetails data) => json.encode(data.toJson());
 
 class OrdersDetails {
     bool status;
     Order order;
     User user;
     List<Product> products;
-    ConfirmCart confirmCart;
 
     OrdersDetails({
         required this.status,
         required this.order,
         required this.user,
         required this.products,
-        required this.confirmCart,
     });
 
     factory OrdersDetails.fromJson(Map<String, dynamic> json) => OrdersDetails(
@@ -28,7 +26,6 @@ class OrdersDetails {
         order: Order.fromJson(json["order"]),
         user: User.fromJson(json["user"]),
         products: List<Product>.from(json["products"].map((x) => Product.fromJson(x))),
-        confirmCart: ConfirmCart.fromJson(json["confirm_cart"]),
     );
 
     Map<String, dynamic> toJson() => {
@@ -36,95 +33,66 @@ class OrdersDetails {
         "order": order.toJson(),
         "user": user.toJson(),
         "products": List<dynamic>.from(products.map((x) => x.toJson())),
-        "confirm_cart": confirmCart.toJson(),
-    };
-}
-
-class ConfirmCart {
-    int id;
-    int userId;
-    String totalPrice;
-    DateTime updatedAt;
-    DateTime createdAt;
-
-    ConfirmCart({
-        required this.id,
-        required this.userId,
-        required this.totalPrice,
-        required this.updatedAt,
-        required this.createdAt,
-    });
-
-    factory ConfirmCart.fromJson(Map<String, dynamic> json) => ConfirmCart(
-        id: json["id"],
-        userId: json["user_id"],
-        totalPrice: json["total_price"],
-        updatedAt: DateTime.parse(json["updated_at"]),
-        createdAt: DateTime.parse(json["created_at"]),
-    );
-
-    Map<String, dynamic> toJson() => {
-        "id": id,
-        "user_id": userId,
-        "total_price": totalPrice,
-        "updated_at": updatedAt.toIso8601String(),
-        "created_at": createdAt.toIso8601String(),
     };
 }
 
 class Order {
     int id;
     int userId;
-    int cartId;
-    dynamic paymentMethod;
-    int total;
+    String paymentMethod;
+    double total;
     String status;
     DateTime updatedAt;
     DateTime createdAt;
+    String vehicleType;
+    String products;
 
     Order({
         required this.id,
         required this.userId,
-        required this.cartId,
-        this.paymentMethod,
+        required this.paymentMethod,
         required this.total,
         required this.status,
         required this.updatedAt,
         required this.createdAt,
+        required this.vehicleType,
+        required this.products,
     });
 
     factory Order.fromJson(Map<String, dynamic> json) => Order(
         id: json["id"],
         userId: json["user_id"],
-        cartId: json["cart_id"],
         paymentMethod: json["payment_method"],
-        total: json["total"],
+        total: json["total"]?.toDouble(),
         status: json["status"],
         updatedAt: DateTime.parse(json["updated_at"]),
         createdAt: DateTime.parse(json["created_at"]),
+        vehicleType: json["vehicle_type"],
+        products: json["products"],
     );
 
     Map<String, dynamic> toJson() => {
         "id": id,
         "user_id": userId,
-        "cart_id": cartId,
         "payment_method": paymentMethod,
         "total": total,
         "status": status,
         "updated_at": updatedAt.toIso8601String(),
         "created_at": createdAt.toIso8601String(),
+        "vehicle_type": vehicleType,
+        "products": products,
     };
 }
 
 class Product {
     int id;
     String name;
-    dynamic nameAr;
+    String nameAr;
     dynamic nameUr;
     dynamic nameBn;
     String image;
     String description;
-    dynamic descriptionAr;
+    String descriptionAr;
     dynamic descriptionUr;
     dynamic descriptionBn;
     String price;
@@ -138,14 +106,14 @@ class Product {
     Product({
         required this.id,
         required this.name,
-        this.nameAr,
-        this.nameUr,
-        this.nameBn,
+        required this.nameAr,
+        required this.nameUr,
+        required this.nameBn,
         required this.image,
         required this.description,
-        this.descriptionAr,
-        this.descriptionUr,
-        this.descriptionBn,
+        required this.descriptionAr,
+        required this.descriptionUr,
+        required this.descriptionBn,
         required this.price,
         required this.status,
         required this.createdAt,
@@ -203,15 +171,17 @@ class User {
     dynamic emailVerifiedAt;
     DateTime createdAt;
     DateTime updatedAt;
+    int isVerified;
     Customer customer;
 
     User({
         required this.id,
         required this.name,
         required this.email,
-        this.emailVerifiedAt,
+        required this.emailVerifiedAt,
         required this.createdAt,
         required this.updatedAt,
+        required this.isVerified,
         required this.customer,
     });
 
@@ -222,6 +192,7 @@ class User {
         emailVerifiedAt: json["email_verified_at"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
+        isVerified: json["is_verified"],
         customer: Customer.fromJson(json["customer"]),
     );
 
@@ -232,6 +203,7 @@ class User {
         "email_verified_at": emailVerifiedAt,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
+        "is_verified": isVerified,
         "customer": customer.toJson(),
     };
 }
@@ -245,6 +217,7 @@ class Customer {
     String city;
     DateTime createdAt;
     DateTime updatedAt;
+    String country;
 
     Customer({
         required this.id,
@@ -255,6 +228,7 @@ class Customer {
         required this.city,
         required this.createdAt,
         required this.updatedAt,
+        required this.country,
     });
 
     factory Customer.fromJson(Map<String, dynamic> json) => Customer(
@@ -266,6 +240,7 @@ class Customer {
         city: json["city"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
+        country: json["country"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -277,5 +252,6 @@ class Customer {
         "city": city,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
+        "country": country,
     };
 }

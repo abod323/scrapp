@@ -23,6 +23,7 @@ ApiClinet apiClinet = Get.find<ApiClinet>();
     // TODO: implement initState
     super.initState();
     Future.delayed(const Duration(seconds: 3), () {
+      
       // check first time shared pref
       if(apiClinet.sharedPreferences.getBool('firstTime')==null){
         Get.offAll(() => const OnBordingView());

@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:phone_text_field/phone_text_field.dart';
 import 'package:sacrapapp/app/modules/Home/views/home_view.dart';
 import 'package:sacrapapp/app/modules/Login/views/forget_password.dart';
 
@@ -42,17 +43,60 @@ class LoginView extends GetView<LoginController> {
               const SizedBox(
                 height: 20,
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CustomTextfield(
-                  borderWidth: 1,
-                  controller: controller.emailController,
-                  hint: 'email'.tr,
-                  label: 'email'.tr,
-                  contentPadding: 10,
-                  prefixIconPadding: 10,
-                ),
+              // Padding(
+              //   padding: const EdgeInsets.all(8.0),
+              //   child: CustomTextfield(
+              //     borderWidth: 1,
+              //     controller: controller.emailController,
+              //     hint: 'email'.tr,
+              //     label: 'email'.tr,
+              //     contentPadding: 10,
+              //     prefixIconPadding: 10,
+              //   ),
+              // ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                width: 400,
+                child: PhoneTextField(
+                     textAlign: TextAlign.right,
+                     textStyle: robotoRegular,
+                      locale: const Locale('ar'),
+                      invalidNumberMessage:'invalid_number'.tr,
+                      decoration:  InputDecoration(
+                        
+                        
+                        contentPadding: EdgeInsets.all(10),
+                       border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                          borderSide: BorderSide(),
+                        ),
+                       
+                        labelText: 'phone'.tr,
+                      ),
+                      searchFieldInputDecoration: const InputDecoration(
+                        
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                          borderSide: BorderSide(),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                          borderSide: BorderSide(),
+                        ),
+                        suffixIcon: Icon(Icons.search),
+                        hintText: "بحث عن بالاسم او الرمز",
+                      ),
+                      dialogTitle: "اختر الدوله",
+                      initialCountryCode: "SA",
+                      
+                      onChanged: (phone) {
+                        controller.phone=phone.completeNumber;
+                        print(phone.completeNumber);
+                      },
+                    ),
               ),
+            ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: CustomTextfield(

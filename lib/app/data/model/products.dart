@@ -21,7 +21,7 @@ class Products {
     String? descriptionAr;
     String? descriptionUrdo;
     String? descriptionBang;
-    String publish;
+    String status;
     DateTime createdAt;
     DateTime updatedAt;
 
@@ -38,7 +38,7 @@ class Products {
         this.descriptionAr,
         this.descriptionUrdo,
         this.descriptionBang,
-        required this.publish,
+        required this.status,
         required this.createdAt,
         required this.updatedAt,
     });
@@ -56,7 +56,7 @@ class Products {
         descriptionAr: json["description_ar"]??json["description"],
         descriptionUrdo: json["description_ur"]??json["description"],
         descriptionBang: json["description_bn"]??json["description"],
-        publish: json["publish"],
+        status: json["status"].toString(),
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
     );
@@ -74,7 +74,7 @@ class Products {
         "description_ar": descriptionAr,
         "description_ur": descriptionUrdo,
         "description_bn": descriptionBang,
-        "publish": publish,
+        "status": status,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
     };

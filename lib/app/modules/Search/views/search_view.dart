@@ -8,7 +8,7 @@ import '../controllers/search_controller.dart';
 import 'search_product_card.dart';
 
 class SearchView extends StatelessWidget {
-  final controller = Get.put(SearchController());
+  final controller = Get.put(CustomSearchController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(

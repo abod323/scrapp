@@ -16,7 +16,7 @@ class ProductRepo {
     final response = await apiClinet.getData(AppConstants.PRODUCTS_URI);
     if (response.statusCode == 200) {
       final List<dynamic> products = productsFromJson(response.body);
-     products.removeWhere((element) => element.publish == '0');
+     products.removeWhere((element) => element.status == '0');
       return products as List<Products>;
     } else {
       throw Exception('Failed to load products');
@@ -29,7 +29,7 @@ class ProductRepo {
       //if status is 0 then remove
       final List<dynamic> products = productsFromJson(response.body);
       //check status
-      products.removeWhere((element) => element.publish == '0');
+      products.removeWhere((element) => element.status == '0');
       return products as List<Products>;
     } else {
       throw Exception('Failed to load products');
@@ -41,7 +41,7 @@ class ProductRepo {
     if (response.statusCode == 200) {
       final List<dynamic> products = productsFromJson(response.body);
       print(response.body);
-products.removeWhere((element) => element.publish == '0');
+products.removeWhere((element) => element.status == '0');
       return products as List<Products>;
     } else {
       throw Exception('Failed to load products');

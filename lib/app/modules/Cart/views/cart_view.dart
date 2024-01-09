@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sacrapapp/app/data/repository/auth_repo.dart';
+import 'package:sacrapapp/app/modules/Cart/views/payment_type.dart';
+import 'package:sacrapapp/app/modules/Cart/views/vehicle_type.dart';
 import 'package:sacrapapp/app/widget/user_address.dart';
 
 import '../../../widget/custom_button.dart';
@@ -30,7 +32,7 @@ class CartScreen extends GetView<CartController>{
             fontSize: 16,
             text: 'place_order'.tr,
             onPressed: () {
-              controller.placeOrder();
+              controller.placeOrder('',true);
             },
           ),
         ),
@@ -50,7 +52,7 @@ class CartScreen extends GetView<CartController>{
         return controller.cartlodding.value?
           Center(child: CircularProgressIndicator(),):
          Get.find<AuthRepo>().isLogin()?
-          controller.cart!.cart.isEmpty?
+          controller.cart==null||controller.cart!.cart.isEmpty?
             Center(child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -89,12 +91,49 @@ class CartScreen extends GetView<CartController>{
                             itemBuilder: (context, index) {
                               return CartProduct(
                               products: controller.cart!.cart[index].product,
-                              quantity: controller.cart!.cart[index].quantity,
+                             
                               total: controller.cart!.totalPrices,
                               CartId: controller.cart!.cart[index].id,
                               );
                             },
                           ),
+                          SizedBox(height: 10,),
+                          Container(
+                          padding: EdgeInsets.all(10),
+                          decoration:
+                              BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.white),
+                           child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                               //my kcalories
+                            Text('details'.tr,style: robotoRegular.copyWith(fontWeight:FontWeight.bold),),
+                            //Vehicle type
+                            SizedBox(height: 5,),
+                            Text('vehicle_type'.tr,style: robotoRegular,),
+                              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                              
+                              Container(
+                                width: 200,
+                                height: 40,
+                                child: VehicleType())
+                            ]),
+                              SizedBox(height: 5,),
+                            Text('payment_type'.tr,style: robotoRegular,),
+                              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                              
+                              Container(
+                                width: 200,
+                                height: 40,
+                                child: PaymentType())
+                            ]),
+
+
+                      
+                            
+      
+                            ],
+                           ),
+                         ),
                          
                           SizedBox(height: 15),
                          Container(
@@ -107,18 +146,25 @@ class CartScreen extends GetView<CartController>{
                                //my kcalories
                             Text('order_details'.tr,style: robotoRegular.copyWith(fontWeight:FontWeight.bold),),
                             //total kcalories
+                            
+                         
                             SizedBox(height: 5,),
                               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                               Text('max_price'.tr,style: robotoRegular,),
                               Text(controller.max_price+' '+'SR'.tr,style: robotoRegular.copyWith(fontSize: 14),),
                             ]),
-                         
+
+                          SizedBox(height: 5,),
+                              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                              Text('min_price'.tr,style: robotoRegular,),
+                              Text(controller.min_price+' '+'SR'.tr,style: robotoRegular.copyWith(fontSize: 14),),
+                            ]),
                             
                             SizedBox(height:5),
                          
                             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                               Text('total'.tr,style: robotoRegular,),
-                              Text(controller.total_price.value.toString()+' '+'SR'.tr,style: robotoRegular.copyWith(fontSize: 14),),
+                              Text(controller.total_price.value.toStringAsFixed(3)+' '+'SR'.tr,style: robotoRegular.copyWith(fontSize: 14),),
                             ]),
                          
                             
@@ -132,7 +178,7 @@ class CartScreen extends GetView<CartController>{
                          
                              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                               Text('subtotal'.tr,style: robotoRegular,),
-                              Text(controller.total_price.value.toString()+' '+'SR'.tr,style:robotoRegular.copyWith(fontSize: 14)),
+                              Text(controller.total_price.value.toStringAsFixed(3)+' '+'SR'.tr,style:robotoRegular.copyWith(fontSize: 14)),
                             ]),
                             ],
                            ),

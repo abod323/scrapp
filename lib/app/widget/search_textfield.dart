@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
+import 'package:sacrapapp/app/modules/Search/controllers/search_controller.dart';
 
-import '../modules/Search/controllers/search_controller.dart';
+
+
 import '../modules/Search/views/search_view.dart';
 
 class SearchTextField extends StatefulWidget {
@@ -16,7 +17,7 @@ class SearchTextField extends StatefulWidget {
 
 class _SearchTextFieldState extends State<SearchTextField> {
   //controller
-  var searchController = Get.put(SearchController());
+  var customSearchController = Get.put(CustomSearchController());
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -28,11 +29,11 @@ class _SearchTextFieldState extends State<SearchTextField> {
         ),
        
         child: TextFormField(
-          controller:searchController.searchController,
+          controller:customSearchController.searchController,
           onTap: (){
             if(widget.isHome??false){
               FocusScope.of(context).requestFocus(FocusNode());
-              searchController.searchController.clear();
+              customSearchController.searchController.clear();
               Get.to(()=>SearchView());
              
               //focus to search textfield
@@ -40,7 +41,7 @@ class _SearchTextFieldState extends State<SearchTextField> {
             }
           },
           onChanged: (value){
-            searchController.searchProduct(value);
+            customSearchController.searchProduct(value);
           },
           decoration: InputDecoration(
             

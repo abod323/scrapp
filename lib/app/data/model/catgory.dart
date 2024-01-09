@@ -16,8 +16,7 @@ class Catgories {
     DateTime updatedAt;
     dynamic subId;
     String nameAr;
-    String nameUrdo;
-    String nameBang;
+
     List<SubCatgory> subCatgories;
 
     Catgories({
@@ -28,8 +27,7 @@ class Catgories {
         required this.updatedAt,
         this.subId,
         required this.nameAr,
-        required this.nameUrdo,
-        required this.nameBang,
+
         required this.subCatgories,
     });
 
@@ -41,8 +39,7 @@ class Catgories {
         updatedAt: DateTime.parse(json["updated_at"]),
         subId: json["sub_id"],
         nameAr: json["name_ar"],
-        nameUrdo: json["name_ur"],
-        nameBang: json["name_bn"],
+ 
         subCatgories: //check null
             json["sub_catgories"] == null ? [] : List<SubCatgory>.from(json["sub_catgories"].map((x) => SubCatgory.fromJson(x))),
     );
@@ -55,8 +52,6 @@ class Catgories {
         "updated_at": updatedAt.toIso8601String(),
         "sub_id": subId,
         "name_ar": nameAr,
-        "name_urdo": nameUrdo,
-        "name_bang": nameBang,
         "sub_catgories": List<dynamic>.from(subCatgories.map((x) => x.toJson())),
     };
 }
@@ -69,8 +64,7 @@ class SubCatgory {
     DateTime updatedAt;
     int categoryId;
     String nameAr;
-    String nameUrdo;
-    String nameBang;
+
 
     SubCatgory({
         required this.id,
@@ -80,8 +74,7 @@ class SubCatgory {
         required this.updatedAt,
         required this.categoryId,
         required this.nameAr,
-        required this.nameUrdo,
-        required this.nameBang,
+ 
     });
 
     factory SubCatgory.fromJson(Map<String, dynamic> json) => SubCatgory(
@@ -92,8 +85,7 @@ class SubCatgory {
         updatedAt: DateTime.parse(json["updated_at"]),
         categoryId: json["category_id"],
         nameAr: json["name_ar"],
-        nameUrdo: json["name_ur"],
-        nameBang: json["name_bn"],
+
     );
 
     Map<String, dynamic> toJson() => {
@@ -104,7 +96,6 @@ class SubCatgory {
         "updated_at": updatedAt.toIso8601String(),
         "category_id": categoryId,
         "name_ar": nameAr,
-        "name_urdo": nameUrdo,
-        "name_bang": nameBang,
+    
     };
 }

@@ -48,10 +48,12 @@ class OrderView extends GetView<OrderController> {
                   ),
                 )
               : StreamBuilder(
+                 
                   stream: controller.streamOrders(),
                   builder: (context,AsyncSnapshot<Orders> snapshot) {
                     if (snapshot.hasData) {
                       return ListView.builder(
+                        
                         itemCount: snapshot.data!.orders.length,
                         itemBuilder: (context, index) {
                           return Card(

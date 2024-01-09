@@ -4,9 +4,10 @@
 
 import 'dart:convert';
 
-Orders ordersFromJson(Map<String,dynamic> str) => Orders.fromJson(str);
+Orders ordersFromJson(Map<String,dynamic> map) => Orders.fromJson(map);
 
-Map<String,dynamic> ordersToJson(Orders data) => data.toJson();
+String ordersToJson(Orders data) => json.encode(data.toJson());
+
 class Orders {
     bool status;
     List<Order> orders;
@@ -34,44 +35,48 @@ class Orders {
 class Order {
     int id;
     int userId;
-    int cartId;
-    dynamic paymentMethod;
-    int total;
+    String paymentMethod;
+    double total;
     String status;
     DateTime updatedAt;
     DateTime createdAt;
+    String vehicleType;
+    String products;
 
     Order({
         required this.id,
         required this.userId,
-        required this.cartId,
-        this.paymentMethod,
+        required this.paymentMethod,
         required this.total,
         required this.status,
         required this.updatedAt,
         required this.createdAt,
+        required this.vehicleType,
+        required this.products,
     });
 
     factory Order.fromJson(Map<String, dynamic> json) => Order(
         id: json["id"],
         userId: json["user_id"],
-        cartId: json["cart_id"],
         paymentMethod: json["payment_method"],
-        total: json["total"],
+        total: json["total"]?.toDouble(),
         status: json["status"],
         updatedAt: DateTime.parse(json["updated_at"]),
         createdAt: DateTime.parse(json["created_at"]),
+        vehicleType: json["vehicle_type"],
+        products: json["products"],
     );
 
     Map<String, dynamic> toJson() => {
         "id": id,
         "user_id": userId,
-        "cart_id": cartId,
         "payment_method": paymentMethod,
         "total": total,
         "status": status,
         "updated_at": updatedAt.toIso8601String(),
         "created_at": createdAt.toIso8601String(),
+        "vehicle_type": vehicleType,
+        "products": products,
     };
 }
 
@@ -82,15 +87,17 @@ class User {
     dynamic emailVerifiedAt;
     DateTime createdAt;
     DateTime updatedAt;
+    int isVerified;
     Customer customer;
 
     User({
         required this.id,
         required this.name,
         required this.email,
-        this.emailVerifiedAt,
+        required this.emailVerifiedAt,
         required this.createdAt,
         required this.updatedAt,
+        required this.isVerified,
         required this.customer,
     });
 
@@ -101,6 +108,7 @@ class User {
         emailVerifiedAt: json["email_verified_at"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
+        isVerified: json["is_verified"],
         customer: Customer.fromJson(json["customer"]),
     );
 
@@ -111,6 +119,7 @@ class User {
         "email_verified_at": emailVerifiedAt,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
+        "is_verified": isVerified,
         "customer": customer.toJson(),
     };
 }
@@ -124,6 +133,7 @@ class Customer {
     String city;
     DateTime createdAt;
     DateTime updatedAt;
+    String country;
 
     Customer({
         required this.id,
@@ -134,17 +144,19 @@ class Customer {
         required this.city,
         required this.createdAt,
         required this.updatedAt,
+        required this.country,
     });
 
     factory Customer.fromJson(Map<String, dynamic> json) => Customer(
-        id: json["id"]??0,
-        userId: json["user_id"]??0,
-        name: json["name"]??'',
-        phone: json["phone"]??'',
-        address: json["address"]??'',
-        city: json["city"]??'',
+        id: json["id"],
+        userId: json["user_id"],
+        name: json["name"],
+        phone: json["phone"],
+        address: json["address"],
+        city: json["city"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
+        country: json["country"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -156,5 +168,6 @@ class Customer {
         "city": city,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
+        "country": country,
     };
 }

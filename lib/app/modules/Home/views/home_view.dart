@@ -21,18 +21,25 @@ class HomeView extends GetView<HomeController> {
         
         body: Column(
           children: [
-            //sixebox
-            const SizedBox(height: 20,),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: UserAddressSelect(),
-            ),
+          Expanded(child:
+           Scrollbar(
+            child:SingleChildScrollView(
+              child: Column(
+                children: [
+                   const SizedBox(height: 20,),
+            
             SearchTextField(isHome: true),
             SizedBox(height: 5,),
             CategoryView(),
             
             ProductCard(),
             SizedBox(height: 20,),
+                 
+                ],
+              ),
+            ),
+           )
+          )
           ],
         )
       ),

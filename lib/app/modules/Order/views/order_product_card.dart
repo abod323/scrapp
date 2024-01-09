@@ -1,17 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+
 import 'package:get/get.dart';
 
 import '../../../data/model/order_details.dart';
 import '../../../util/app_constant.dart';
 import '../../../widget/styles.dart';
 
+
 class OrderProductCard extends StatelessWidget {
  final Product product;
 
-  const OrderProductCard({super.key, required this.product});
+   OrderProductCard({super.key, required this.product});
+  String getLocalTitle(Product product) {
+    switch (Get.locale!.languageCode) {
+      case 'en':
+        return product.name;
+      case 'ar':
+        return product.nameAr??product.name;
 
+      default:
+        return product.name;
+    }
+  }
+  //get local description {en,ar,urdo,bangla}
+  String getLocalDescription(Product product) {
+    switch (Get.locale!.languageCode) {
+      case 'en':
+        return product.description;
+      case 'ar':
+        return product.descriptionAr??product.description;
+    
+      default:
+        return product.description;
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -54,7 +77,7 @@ class OrderProductCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            product.name,
+                            getLocalTitle(product),
                             style: robotoRegular.copyWith(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
@@ -63,7 +86,7 @@ class OrderProductCard extends StatelessWidget {
                           SizedBox(
                             width: 200,
                             child: Text(
-                              product.description,
+                              getLocalDescription(product),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: robotoRegular.copyWith(

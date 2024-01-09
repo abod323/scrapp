@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+
 import 'package:get/get.dart';
 import 'package:sacrapapp/app/widget/styles.dart';
 
@@ -9,6 +9,7 @@ class CustomTextfield extends StatefulWidget {
   final String? label;
   final String? error;
    bool? isObscure;
+  final bool? isPhone;
    final bool? isPassword;
   final bool? isEnable;
   final bool? isReadOnly;
@@ -44,7 +45,7 @@ class CustomTextfield extends StatefulWidget {
   //controller
   final TextEditingController? controller;
 
-   CustomTextfield({super.key, this.hint, this.label, this.error, this.isObscure, this.isEnable, this.isReadOnly, this.isAutoFocus, this.isShowPrefixIcon, this.isShowSuffixIcon, this.isShowCounterText, this.maxLength, this.maxLines, this.minLines, this.maxLengthEnforced, this.counterText, this.width, this.height, this.radius, this.fontSize, this.prefixIconSize, this.suffixIconSize, this.borderWidth, this.contentPadding, this.prefixIconPadding, this.suffixIconPadding, this.prefixIconSpacing, this.suffixIconSpacing, this.contentHorizontalPadding, this.contentVerticalPadding, this.contentPaddingAll, this.contentPaddingHorizontal, this.controller, this.prefixIcon, this.keyboardType, this.isPassword});
+   CustomTextfield({super.key, this.hint, this.label, this.error, this.isObscure, this.isEnable, this.isReadOnly, this.isAutoFocus, this.isShowPrefixIcon, this.isShowSuffixIcon, this.isShowCounterText, this.maxLength, this.maxLines, this.minLines, this.maxLengthEnforced, this.counterText, this.width, this.height, this.radius, this.fontSize, this.prefixIconSize, this.suffixIconSize, this.borderWidth, this.contentPadding, this.prefixIconPadding, this.suffixIconPadding, this.prefixIconSpacing, this.suffixIconSpacing, this.contentHorizontalPadding, this.contentVerticalPadding, this.contentPaddingAll, this.contentPaddingHorizontal, this.controller, this.prefixIcon, this.keyboardType, this.isPassword, this.isPhone});
 
   @override
   State<CustomTextfield> createState() => _CustomTextfieldState();
@@ -61,13 +62,15 @@ class _CustomTextfieldState extends State<CustomTextfield> {
       enabled: widget.isEnable??true,
       readOnly: widget.isReadOnly??false,
       autofocus: widget.isAutoFocus??false,
+      textDirection:widget.isPhone??false?TextDirection.ltr:TextDirection.rtl,
+      textAlign:widget.isPhone??false?TextAlign.end:TextAlign.start,
       maxLength: widget.maxLength,
       keyboardType: widget.keyboardType??TextInputType.text,
       style: robotoRegular.copyWith(fontSize: widget.fontSize??16),
       decoration: InputDecoration(
         hintStyle:robotoRegular.copyWith(fontSize: widget.fontSize??16),
         labelStyle: robotoRegular.copyWith(fontSize: widget.fontSize??16),
-        
+        hintTextDirection:widget.isPhone??false?TextDirection.ltr:TextDirection.rtl,
         hintText: widget.hint,
         labelText: widget.label,
         errorText: widget.error,

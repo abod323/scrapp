@@ -17,7 +17,7 @@ class AuthRepo {
   }
 
   Future<Response> login({required String email,required String password}) async {
-    return await apiClient.postData(AppConstants.LOGIN_URI, {"email": email, "password": password});
+    return await apiClient.postData(AppConstants.LOGIN_URI, {"phone": email, "password": password});
   }
 
   //get customer info
@@ -80,6 +80,8 @@ class AuthRepo {
   Future<Response> resetPassword(String token,String password) async {
     return await apiClient.postData(AppConstants.RESET_PASSWORD_URI, {"token": token,"password":password});
   }
+
+ 
 
   //logout
   Future<bool> logout() async {

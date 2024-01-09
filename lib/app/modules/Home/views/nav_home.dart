@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+
 import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:sacrapapp/app/modules/Cart/controllers/cart_controller.dart';
 import 'package:sacrapapp/app/modules/Home/views/home_view.dart';
+import 'package:sacrapapp/app/modules/Login/views/login_view.dart';
 import 'package:sacrapapp/app/modules/Order/controllers/order_controller.dart';
 
 import '../../../data/repository/auth_repo.dart';
@@ -47,6 +49,17 @@ List<Widget> _buildScreens() {
             ),
             //cart
             PersistentBottomNavBarItem(
+              onPressed:(p0) {
+              var controller=Get.put(CartController());
+              if(Get.find<AuthRepo>().isLogin()){
+              controller.addToCartApi().then((value){
+                   Get.to(() => CartScreen());
+              } );
+              }
+              else{
+                Get.to(()=>LoginView());
+              }
+              },
                 icon: Icon(CupertinoIcons.cart),
                 title: ('cart'.tr),
                 activeColorPrimary: Colors.amber,

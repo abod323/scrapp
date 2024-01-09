@@ -4,6 +4,7 @@ import 'package:sacrapapp/app/data/api/api_clinet.dart';
 import 'package:sacrapapp/app/data/model/sign_up.dart';
 import 'package:sacrapapp/app/data/repository/auth_repo.dart';
 import 'package:sacrapapp/app/modules/Login/views/login_view.dart';
+import 'package:sacrapapp/app/modules/Login/views/verfiy_page.dart';
 
 class RegisterController extends GetxController {
   //TODO: Implement RegisterController
@@ -17,13 +18,14 @@ class RegisterController extends GetxController {
   var passwordController = TextEditingController();
   var RepasswordController = TextEditingController();
   var nameController = TextEditingController();
-  var phoneController = TextEditingController();
+  var phone='';
   //address
   var addressController = TextEditingController();
   var cityController = TextEditingController();
   //country
   var countryController = TextEditingController();
   var loading = false.obs;
+
 
   @override
   void onInit() {
@@ -46,7 +48,7 @@ void RegisterButtonClicked(){
     Get.snackbar('error'.tr, 'name_empty'.tr,   snackPosition: SnackPosition.BOTTOM,);
   }else if(emailController.text.isEmpty){
     Get.snackbar('error'.tr, 'email_empty'.tr,   snackPosition: SnackPosition.BOTTOM,);
-  }else if(phoneController.text.isEmpty){
+  }else if(phone.isEmpty){
     Get.snackbar('error'.tr, 'phone_empty'.tr,   snackPosition: SnackPosition.BOTTOM,);
   }else if(countryController.text.isEmpty){
     Get.snackbar('error'.tr, 'country_empty'.tr,   snackPosition: SnackPosition.BOTTOM,);
@@ -70,7 +72,7 @@ void RegisterButtonClicked(){
        SignUpModel(
         name: nameController.text,
         email: emailController.text,
-        phone: phoneController.text,
+        phone: phone,
         password: passwordController.text,
         passwordConfirmation: RepasswordController.text,
         address: addressController.text,
@@ -79,7 +81,7 @@ void RegisterButtonClicked(){
       )
     ).then((value) {
       if(value.statusCode==200){
-        Get.offAll(()=>LoginView(),transition: Transition.rightToLeft,curve: Curves.easeInCubic,duration: const Duration(milliseconds: 600));
+        Get.offAll(()=>VerfiyPage(isForgetPassword: false,phone:phone,),transition: Transition.rightToLeft,curve: Curves.easeInCubic,duration: const Duration(milliseconds: 600));
         Get.snackbar('success'.tr, 'register_success'.tr,   snackPosition: SnackPosition.BOTTOM,);
         loading.value = false;
       }else{

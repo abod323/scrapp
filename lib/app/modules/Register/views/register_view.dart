@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:phone_text_field/phone_text_field.dart';
 import 'package:sacrapapp/app/widget/styles.dart';
 
 import '../../../widget/custom_appbar.dart';
@@ -52,18 +53,49 @@ class RegisterView extends GetView<RegisterController> {
               ),
               //phone
             Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CustomTextfield(
-                    borderWidth: 1,
-                    hint: 'phone'.tr,
-                    label: 'phone'.tr,
-                    controller: registerController.phoneController,
-                    contentPadding: 10,
-                    prefixIconPadding: 10,
-                    keyboardType: TextInputType.phone,
-                    
-                  ),
-                ),
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                width: 400,
+                child: PhoneTextField(
+                   textStyle: robotoRegular,
+                    invalidNumberMessage: 'invalid_number'.tr,
+                     textAlign: TextAlign.right,
+                      locale: const Locale('ar'),
+                      
+                      decoration:  InputDecoration(
+                        
+                        
+                        contentPadding: EdgeInsets.all(10),
+                       border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                          borderSide: BorderSide(),
+                        ),
+                       
+                        labelText: 'phone'.tr,
+                      ),
+                      searchFieldInputDecoration: const InputDecoration(
+                        
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                          borderSide: BorderSide(),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                          borderSide: BorderSide(),
+                        ),
+                        suffixIcon: Icon(Icons.search),
+                        hintText: "بحث عن بالاسم او الرمز",
+                      ),
+                      dialogTitle: "اختر الدوله",
+                      initialCountryCode: "SA",
+                      
+                      onChanged: (phone) {
+                        controller.phone=phone.completeNumber;
+                        print(phone.completeNumber);
+                      },
+                    ),
+              ),
+            ),
                 //country
             Padding(
                   padding: const EdgeInsets.all(8.0),

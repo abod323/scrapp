@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+
 import 'package:get/get.dart';
 import 'package:sacrapapp/app/modules/Cart/controllers/cart_controller.dart';
 import 'package:sacrapapp/app/modules/Home/controllers/home_controller.dart';
+import 'package:sacrapapp/app/modules/Settings/controllers/settings_controller.dart';
 import 'package:sacrapapp/app/widget/custom_button.dart';
 
 import '../../../widget/styles.dart';
@@ -13,10 +14,12 @@ class AddToCartDialog extends StatelessWidget {
   final String mix_price;
   final bool? order_placed; 
   final int orderId; 
-   AddToCartDialog({super.key, required this.price, required this.mix_price, this.order_placed, required this.orderId});
+  final bool? rid_it;
+   AddToCartDialog({super.key, required this.price, required this.mix_price, this.order_placed, required this.orderId, this.rid_it});
 
    var homeController=Get.put(HomeController());
    var cartController=Get.put(CartController());
+   var settingController=Get.find<SettingsController>();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -46,9 +49,9 @@ class AddToCartDialog extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
                 color: Colors.grey[100]
               ),
-              child: Text('order_placed'.tr,textAlign:TextAlign.center,style: robotoBold.copyWith(fontSize: 16,color:Colors.black),)),
+              child: Text(settingController.appsettings![8].value.toString(),textAlign:TextAlign.center,style: robotoBold.copyWith(fontSize: 16,color:Colors.black),)),
           ),
-         
+         if(rid_it??true)
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: GestureDetector(
@@ -120,7 +123,7 @@ class AddToCartDialog extends StatelessWidget {
                   child: CustomButton(isLoding: cartController.place_loading, text: "place_order".tr, onPressed: (){
                     
                     
-                    cartController.placeOrder();
+                    cartController.placeOrder('',true);
                   },radius:10,fontSize: 14,),
                 ),
               ),
