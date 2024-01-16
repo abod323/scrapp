@@ -54,47 +54,52 @@ class LoginView extends GetView<LoginController> {
               //     prefixIconPadding: 10,
               //   ),
               // ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                width: 400,
-                child: PhoneTextField(
-                     textAlign: TextAlign.right,
-                     textStyle: robotoRegular,
-                      locale: const Locale('ar'),
-                      invalidNumberMessage:'invalid_number'.tr,
-                      decoration:  InputDecoration(
-                        
-                        
-                        contentPadding: EdgeInsets.all(10),
-                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                          borderSide: BorderSide(),
+            Directionality(
+              textDirection: TextDirection.ltr,
+
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  width: 400,
+                  child: PhoneTextField(
+                       textAlign: TextAlign.right,
+
+                       textStyle: robotoRegular,
+                        locale: Get.locale!.languageCode=='en'?Locale('en'):Locale('ar'),
+                        invalidNumberMessage:'invalid_number'.tr,
+                        decoration:  InputDecoration(
+                          
+                          
+                          contentPadding: EdgeInsets.all(10),
+                         border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                            borderSide: BorderSide(),
+                          ),
+                         
+                          labelText: 'phone'.tr,
                         ),
-                       
-                        labelText: 'phone'.tr,
+                        searchFieldInputDecoration:  InputDecoration(
+                          
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                            borderSide: BorderSide(),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                            borderSide: BorderSide(),
+                          ),
+                          suffixIcon: Icon(Icons.search),
+                          hintText: Get.locale!.languageCode=='en'?'Search Country':'ابحث عن الدوله',
+                        ),
+                        dialogTitle:Get.locale!.languageCode=='en'?'Search Country':'ابحث عن الدوله',
+                        initialCountryCode: "SA",
+                        
+                        onChanged: (phone) {
+                          controller.phone=phone.completeNumber;
+                          print(phone.completeNumber);
+                        },
                       ),
-                      searchFieldInputDecoration: const InputDecoration(
-                        
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                          borderSide: BorderSide(),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                          borderSide: BorderSide(),
-                        ),
-                        suffixIcon: Icon(Icons.search),
-                        hintText: "بحث عن بالاسم او الرمز",
-                      ),
-                      dialogTitle: "اختر الدوله",
-                      initialCountryCode: "SA",
-                      
-                      onChanged: (phone) {
-                        controller.phone=phone.completeNumber;
-                        print(phone.completeNumber);
-                      },
-                    ),
+                ),
               ),
             ),
               Padding(

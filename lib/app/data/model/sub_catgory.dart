@@ -34,10 +34,10 @@ class Subcatgories {
     factory Subcatgories.fromJson(Map<String, dynamic> json) => Subcatgories(
         id: json["id"],
         nameEn: json["name"],
-        point: json["point"],
+        point: int.parse(json["point"].toString()),
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
-        categoryId: json["category_id"],
+        categoryId: int.parse(json["category_id"].toString()),
         nameAr: json["name_ar"],
         nameUrdo: json["name_ur"]??'',
         nameBang: json["name_bn"]??'',

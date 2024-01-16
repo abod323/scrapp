@@ -19,6 +19,9 @@ class CategoryRepo {
     if (response.statusCode == 200) {
       final List<dynamic> categories = catgoriesFromJson(response.body);
       print(categories.length);
+      //add all 
+      categories.insert(0, Catgories(subCatgories: [],image: 'list.png'
+      ,id: 0, nameEn: "All",createdAt: DateTime.now(), updatedAt: DateTime.now(), nameAr: "الكل",));
       return categories as List<Catgories>;
     } else {
       throw Exception('Failed to load categories');

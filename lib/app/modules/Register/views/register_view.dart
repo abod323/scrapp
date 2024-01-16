@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:phone_text_field/phone_text_field.dart';
+import 'package:sacrapapp/app/modules/Settings/controllers/settings_controller.dart';
 import 'package:sacrapapp/app/widget/styles.dart';
+import 'package:sacrapapp/app/widget/web_view.dart';
 
 import '../../../widget/custom_appbar.dart';
 import '../../../widget/custom_button.dart';
@@ -178,7 +180,10 @@ class RegisterView extends GetView<RegisterController> {
                   }),),
                   Text('agree'.tr,style: robotoRegular.copyWith(fontSize: 15,fontWeight:FontWeight.bold,color:Colors.grey),),
                   TextButton(onPressed: (){
-                    Get.to(()=>TermsPage());
+                    Get.to(()=>WebViewCustom(
+                      title: "terms_and_conditions".tr,
+                      url: Get.find<SettingsController>().appsettings![1].value,
+                    ));
                   }, child: Text('terms_and_conditions'.tr,style: robotoRegular.copyWith(fontSize: 15,fontWeight:FontWeight.bold,color:Colors.amber),))
                 ],
               ),

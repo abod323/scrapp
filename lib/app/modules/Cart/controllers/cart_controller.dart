@@ -202,7 +202,7 @@ Future<void> deleteProductFromCart(int productId) async {
       getCart().then((value) => cartlodding.value = false);
      
     });
-    print(response.body);
+  
     if (response.statusCode == 200) {
       return response;
     } else {
@@ -224,7 +224,7 @@ Future<void> deleteProductFromCart(int productId) async {
     );
   }
   void showRidItDialog(String price,bool isPlaced,int orderId) {
-    Get.back();
+
     //show custom dialog
     Get.defaultDialog(
       title:isPlaced?'place_order'.tr:'congratulations'.tr,

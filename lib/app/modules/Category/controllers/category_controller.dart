@@ -20,7 +20,7 @@ class CategoryController extends GetxController {
   void onInit() {
     super.onInit();
     getCategories();
-    getSubCategories(1);
+    getSubCategories(0);
   }
 
   @override
@@ -37,6 +37,7 @@ class CategoryController extends GetxController {
   Future<void> getCategories() async {
     isLoading.value = true;
     categories = await categoryRepo.getCategories();
+    
     update();
     isLoading.value = false;
   }
@@ -44,6 +45,10 @@ class CategoryController extends GetxController {
   Future<void> getSubCategories(int id) async {
     isSubLoading.value = true;
     subcategories = await categoryRepo.getSubCategories(id);
+    //if ==0 show null
+    if(id==0){
+      subcategories=[];
+    }
     update();
     isSubLoading.value = false;
   }

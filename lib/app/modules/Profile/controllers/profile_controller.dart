@@ -35,7 +35,7 @@ class ProfileController extends GetxController {
     if (response.statusCode == 200) {
       var data = response.body;
       nameController.text = data['customer']['name'];
-      emailController.text = data['customer']['email'];
+      emailController.text = data['customer']['email']??'';
       phoneController.text = data['customer']['phone'];
       addressController.text = data['customer']['address'];
       cityController.text = data['customer']['city'];

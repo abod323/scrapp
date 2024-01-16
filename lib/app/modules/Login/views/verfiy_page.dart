@@ -123,11 +123,12 @@ class _VerfiyPageState extends State<VerfiyPage> {
               //     );
               //     }
               // );
+              controller.codeController.text=verificationCode;
                if(verificationCode.isEmpty){
               Get.snackbar('error'.tr, 'otp_empty'.tr,   snackPosition: SnackPosition.BOTTOM,);
             }else{
               if(widget.isForgetPassword){
-                controller.verifyButtonClicked();
+                controller.verifyButtonClicked(verificationCode);
               }
               else{
                 controller.verifyWhatsappOtpButtonClicked(int.parse(verificationCode));

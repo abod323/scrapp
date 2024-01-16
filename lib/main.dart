@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         //themeColor
         primarySwatch: Colors.amber,
+        useMaterial3: false,
       ),
       translations: LanguageTr(),
       home: const   SplashView(),

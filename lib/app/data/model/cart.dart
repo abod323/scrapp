@@ -55,12 +55,12 @@ class CartElement {
 
     factory CartElement.fromJson(Map<String, dynamic> json) => CartElement(
         id: json["id"],
-        userId: json["user_id"],
-        productId: json["product_id"],
+        userId: int.parse(json["user_id"].toString()),
+        productId: int.parse(json["product_id"].toString()),
         updatedAt: DateTime.parse(json["updated_at"]),
         createdAt: DateTime.parse(json["created_at"]),
         price: double.parse(json["price"].toString()),
-        quantity: json["quantity"],
+        quantity: int.parse(json["quantity"].toString()),
         product: Products.fromJson(json["product"]),
     );
 
@@ -125,11 +125,11 @@ class Products {
         descriptionUr: json["description_ur"],
         descriptionBn: json["description_bn"],
         price: json["price"],
-        status: json["status"],
+        status: int.parse(json["status"].toString()),
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
-        subcategoryId: json["subcategory_id"],
-        categoryId: json["category_id"],
+        subcategoryId: int.parse(json["subcategory_id"].toString()),
+        categoryId: int.parse(json["category_id"].toString()),
     );
 
     Map<String, dynamic> toJson() => {

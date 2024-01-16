@@ -48,7 +48,7 @@ class RidItOffDiloag extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
                 color: Colors.grey[100]
               ),
-              child: Text('لم تتخطى الحد الادنى للطلب! لكن يمكننا تخليصك من الاغراض بدون حصولك على مقابل',textAlign:TextAlign.center,style: robotoBold.copyWith(fontSize: 16,color:Colors.black),)),
+              child: Text('min_order_not_reached'.tr,textAlign:TextAlign.center,style: robotoBold.copyWith(fontSize: 16,color:Colors.black),)),
           ),
          
           // Padding(
@@ -65,16 +65,27 @@ class RidItOffDiloag extends StatelessWidget {
             isLoding: cartController.place_loading,
             radius: 15,
             fontSize: 16,
-            text: "خلصني منها",
+            text: 'rid_it'.tr,
             onPressed: () {
              
               cartController.placeOrder('rid_it',false);
             },
           ),
+          //cancel
+          SizedBox(height: 10,),
+          CustomButton(
+            isLoding: cartController.place_loading,
+            radius: 15,
+            fontSize: 16,
+            text: 'cancel'.tr,
+            onPressed: () {
+              Get.back();
+            },
+          ),
             SizedBox(height: 5,),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text('بالضغط على خلصني منها فأنت توافق ان يكون الطلب بدون اي مقابل',style: robotoRegular.copyWith(color: Colors.grey,fontSize:12),
+              child: Text('agrre_rid_it'.tr,style: robotoRegular.copyWith(color: Colors.grey,fontSize:12),
               textAlign:TextAlign.center,
               ),
             )

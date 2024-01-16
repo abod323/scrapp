@@ -162,7 +162,11 @@ class LanguageTr extends Translations {
           'whatssapp_otp':'Enter the code sent to your whatsapp number or email',
           'resend_otp':'Resend OTP',
           'invalid_number':'Invalid Number',
+           'min_order_not_reached':'You have not reached the minimum order! But we can relieve you of the items without getting paid',
 
+           'rid_it':'Rid It',
+           'cancel':'Cancel',
+           'agrre_rid_it':'By clicking on Rid It, you agree that the order is free of charge',
           
         
 
@@ -176,13 +180,17 @@ class LanguageTr extends Translations {
 
         },
         'ar': {
+          'min_order_not_reached':'لم تتخطى الحد الادنى للطلب! لكن يمكننا تخليصك من الاغراض بدون حصولك على مقابل',
           'SR':'ريال سعودي',
+          'rid_it':"خلصني منها",
           'invalid_number':'رقم غير صحيح',
           'otp_verified_successfully':'تم التحقق من رمز التحقق بنجاح',
           'hello': 'مرحبا بالعالم',
           'whatssapp_otp':'ادخل الرمز المرسل الى رقم الواتس اب الخاص بك او البريد الاكتروني',
           'login': 'تسجيل الدخول',
           'register': 'تسجيل',
+          'cancel':'الغاء',
+          'agrre_rid_it':'بالضغط على خلصني منها فأنت توافق ان يكون الطلب بدون اي مقابل',
           'email': 'البريد الإلكتروني',
           'password': 'كلمه السر',
           'confirm_password': 'تأكيد كلمة المرور',

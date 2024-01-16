@@ -42,7 +42,7 @@ class SearchView extends StatelessWidget {
                                                     shrinkWrap: true,
                       itemCount: controller.searchList.length,
                       itemBuilder: (context,index){
-                        return SearchProductCard(products: controller.searchList[index],);
+                        return SearchProductCard(item: controller.searchList[index],);
                       },
                     
                     ),

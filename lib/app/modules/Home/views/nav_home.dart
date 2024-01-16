@@ -49,17 +49,17 @@ List<Widget> _buildScreens() {
             ),
             //cart
             PersistentBottomNavBarItem(
-              onPressed:(p0) {
-              var controller=Get.put(CartController());
-              if(Get.find<AuthRepo>().isLogin()){
-              controller.addToCartApi().then((value){
-                   Get.to(() => CartScreen());
-              } );
-              }
-              else{
-                Get.to(()=>LoginView());
-              }
-              },
+              // onPressed:(p0) {
+              // var controller=Get.put(CartController());
+              // if(Get.find<AuthRepo>().isLogin()){
+              // controller.addToCartApi().then((value){
+              //      Get.to(() => CartScreen());
+              // } );
+              // }
+              // else{
+              //   Get.to(()=>LoginView());
+              // }
+              // },
                 icon: Icon(CupertinoIcons.cart),
                 title: ('cart'.tr),
                 activeColorPrimary: Colors.amber,
@@ -100,6 +100,19 @@ List<Widget> _buildScreens() {
       controller: homeController.controller,
       screens: _buildScreens(),
       items: _navBarsItems(),
+      onItemSelected: (value) {
+        if(value==1){
+          var controller=Get.put(CartController());
+          if(Get.find<AuthRepo>().isLogin()){
+          controller.addToCartApi().then((value){
+              
+          } );
+          }
+          else{
+           
+          }
+        }
+      },
       confineInSafeArea: true,
       backgroundColor: Colors.white,
       handleAndroidBackButtonPress: true,

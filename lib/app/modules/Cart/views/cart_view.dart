@@ -18,6 +18,7 @@ class CartScreen extends GetView<CartController>{
   const CartScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       bottomNavigationBar://contuine button
       Obx(() =>controller.cartlodding.value||controller.cart==null||controller.cart!.cart.isEmpty?
@@ -44,10 +45,12 @@ class CartScreen extends GetView<CartController>{
      appBar: AppBar(
         title: Text('cart'.tr,style: robotoBold.copyWith(color: Colors.black)),
         centerTitle: true,
+        
         elevation: 0,
         backgroundColor: Colors.white,
            
       ),
+      
       body:   Obx(() {
         return controller.cartlodding.value?
           Center(child: CircularProgressIndicator(),):
@@ -110,21 +113,17 @@ class CartScreen extends GetView<CartController>{
                             //Vehicle type
                             SizedBox(height: 5,),
                             Text('vehicle_type'.tr,style: robotoRegular,),
+                             SizedBox(height: 2,),
                               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                               
-                              Container(
-                                width: 200,
-                                height: 40,
-                                child: VehicleType())
+                            Flexible(child:  VehicleType()),
+                              
                             ]),
-                              SizedBox(height: 5,),
+                            SizedBox(height: 5,),
                             Text('payment_type'.tr,style: robotoRegular,),
+                             SizedBox(height: 2,),
                               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                              
-                              Container(
-                                width: 200,
-                                height: 40,
-                                child: PaymentType())
+                              Flexible(child: PaymentType()),
                             ]),
 
 
@@ -164,7 +163,7 @@ class CartScreen extends GetView<CartController>{
                          
                             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                               Text('total'.tr,style: robotoRegular,),
-                              Text(controller.total_price.value.toStringAsFixed(3)+' '+'SR'.tr,style: robotoRegular.copyWith(fontSize: 14),),
+                              Text(controller.total_price.value.toStringAsFixed(2)+' '+'SR'.tr,style: robotoRegular.copyWith(fontSize: 14),),
                             ]),
                          
                             
@@ -178,7 +177,7 @@ class CartScreen extends GetView<CartController>{
                          
                              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                               Text('subtotal'.tr,style: robotoRegular,),
-                              Text(controller.total_price.value.toStringAsFixed(3)+' '+'SR'.tr,style:robotoRegular.copyWith(fontSize: 14)),
+                              Text(controller.total_price.value.toStringAsFixed(2)+' '+'SR'.tr,style:robotoRegular.copyWith(fontSize: 14)),
                             ]),
                             ],
                            ),

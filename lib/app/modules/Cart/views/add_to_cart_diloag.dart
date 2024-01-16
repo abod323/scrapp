@@ -49,7 +49,8 @@ class AddToCartDialog extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
                 color: Colors.grey[100]
               ),
-              child: Text(settingController.appsettings![8].value.toString(),textAlign:TextAlign.center,style: robotoBold.copyWith(fontSize: 16,color:Colors.black),)),
+              child: Text(Get.locale == Locale('en')?settingController.appsettings![9].value.toString():settingController.appsettings![8].value.toString()
+              ,textAlign:TextAlign.center,style: robotoBold.copyWith(fontSize: 16,color:Colors.black),)),
           ),
          if(rid_it??true)
           Padding(

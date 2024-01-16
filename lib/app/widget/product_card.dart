@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:sacrapapp/app/data/model/products.dart';
 import 'package:sacrapapp/app/util/app_constant.dart';
 import 'package:sacrapapp/app/widget/styles.dart';
-
+import 'package:shimmer/shimmer.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import '../data/model/cart.dart' as cart;
 import '../modules/Cart/controllers/cart_controller.dart';
 import '../modules/Products/controllers/products_controller.dart';
 
 class ProductCard extends StatelessWidget {
+  
   var controller = Get.put(ProductsController());
   var cartController = Get.put(CartController());
 
@@ -16,21 +19,24 @@ class ProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx((){
      return controller.isLoading.value?
-      const Center(child: CircularProgressIndicator()):
+     Container(
+  height: 600, // Set a fixed height for the shimmer list
+  child: ShimmerProductList(itemCount: 5),
+):
+     
       controller.products.isEmpty?
-       Center(child: Text("no_products".tr,style: robotoRegular,)):
-      Padding(
-        padding: const EdgeInsets.all(8.0),
+      Center(child: Text("No Products Found",style: TextStyle(fontSize: 20),)):
+      Container(
+     
         child: ListView.builder(
-        physics:NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        itemCount: controller.products.length,
-        itemBuilder: (context, index) {
-          return Padding(
+          itemCount: controller.products.length,
+          itemBuilder:
+        (context, index) {
+         return  Padding(
             padding: const EdgeInsets.only(left: 15, right: 15, top: 5),
             child: GestureDetector(
               onTap: () {
-                // controller.productBottomSheet(controller.products[index]);
+                // controller.productBottomSheet(item);
               },
               child: Container(
                 height: 120,
@@ -262,8 +268,101 @@ class ProductCard extends StatelessWidget {
             ),
           );
         },
-            ),
+         )
       );
+      
     });
   }
+
+
+
 }
+class ShimmerProductList extends StatelessWidget {
+  final int itemCount;
+
+  const ShimmerProductList({required this.itemCount});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: itemCount,
+      itemBuilder: (context, index) {
+        return ShimmerProductItem();
+      },
+    );
+  }
+}
+
+class ShimmerProductItem extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey[300]!,
+      highlightColor: Colors.grey[100]!,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 15, right: 15, top: 5),
+        child: GestureDetector(
+          onTap: () {
+            // Handle onTap if needed
+          },
+          child: Container(
+            height: 120,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.white,
+            ),
+            child: Row(
+              children: [
+                const SizedBox(
+                  width: 10,
+                ),
+                Container(
+                  height: 80,
+                  width: 80,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.grey[200],
+                  ),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 150,
+                      height: 15,
+                      color: Colors.grey[200],
+                    ),
+                    const SizedBox(height: 5),
+                    Container(
+                      width: 200,
+                      height: 10,
+                      color: Colors.grey[200],
+                    ),
+                    const SizedBox(height: 5),
+                    Container(
+                      width: 100,
+                      height: 10,
+                      color: Colors.grey[200],
+                    ),
+                    const SizedBox(height: 5),
+                    Container(
+                      width: 50,
+                      height: 10,
+                      color: Colors.grey[200],
+                    ),
+                  ],
+                ),
+                // ... (remaining code)
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+

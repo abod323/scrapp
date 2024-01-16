@@ -61,9 +61,9 @@ class Order {
 
     factory Order.fromJson(Map<String, dynamic> json) => Order(
         id: json["id"],
-        userId: json["user_id"],
+        userId: int.parse(json["user_id"].toString()),
         paymentMethod: json["payment_method"],
-        total: json["total"]?.toDouble(),
+        total: double.parse(json["total"].toString()),
         status: json["status"],
         updatedAt: DateTime.parse(json["updated_at"]),
         createdAt: DateTime.parse(json["created_at"]),
@@ -135,12 +135,12 @@ class Product {
         descriptionUr: json["description_ur"],
         descriptionBn: json["description_bn"],
         price: json["price"],
-        status: json["status"],
+        status: int.parse(json["status"].toString()),
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
-        subcategoryId: json["subcategory_id"],
-        categoryId: json["category_id"],
-        quantity: json["quantity"],
+        subcategoryId: int.parse(json["subcategory_id"].toString()),
+        categoryId: int.parse(json["category_id"].toString()),
+        quantity:int.parse(json["quantity"].toString()),
     );
 
     Map<String, dynamic> toJson() => {
@@ -192,7 +192,7 @@ class User {
         emailVerifiedAt: json["email_verified_at"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
-        isVerified: json["is_verified"],
+        isVerified: int.parse(json["is_verified"].toString()),
         customer: Customer.fromJson(json["customer"]),
     );
 
@@ -233,7 +233,7 @@ class Customer {
 
     factory Customer.fromJson(Map<String, dynamic> json) => Customer(
         id: json["id"],
-        userId: json["user_id"],
+        userId: int.parse(json["user_id"].toString()),
         name: json["name"],
         phone: json["phone"],
         address: json["address"],

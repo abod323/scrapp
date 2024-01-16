@@ -49,7 +49,7 @@ class Products {
         descriptionEn: json["description"],
         image: json["image"],
         price: json["price"],
-        categoryId: json["category_id"],
+        categoryId: int.parse(json["category_id"].toString()),
         titleAr: json["name_ar"]??json["name"],
         titleUrdo: json["name_ur"]??json["name"],
         titleBang: json["name_bn"]??json["name"],

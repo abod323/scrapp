@@ -60,17 +60,23 @@ var location_controller = Get.put(LoctionController());
                 if(value1.getString('lat')==null && value1.getString('lng')==null){
                   var address = placemarkFromCoordinates(value.latitude, value.longitude);
                   address.then((value) {
-                  setState(() {
-                      location_controller.currentAddress.value = value[0].country!+','+value[0].administrativeArea!+','+value[0].locality!;
-                  });
+                  //check mounted
+                  if(mounted){
+                    setState(() {
+                      location_controller.currentAddress.value  = value[0].country!+','+value[0].administrativeArea!+','+value[0].locality!;
+                    });
+                  }
                   });
                 }
                 else{
                     var address = placemarkFromCoordinates(double.parse(value1.getString('lat')!), double.parse(value1.getString('lng')!));
                   address.then((value) {
-                   setState(() {
+                   //check mounted
+                  if(mounted){
+                    setState(() {
                       location_controller.currentAddress.value  = value[0].country!+','+value[0].administrativeArea!+','+value[0].locality!;
-                   });
+                    });
+                  }
                   });
                 }
                
@@ -81,6 +87,7 @@ var location_controller = Get.put(LoctionController());
       }
     });
   }
+  
   @override
   Widget build(BuildContext context) {
     return Padding(

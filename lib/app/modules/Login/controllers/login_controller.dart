@@ -137,9 +137,9 @@ else {
     });
   }
   //verify
-  void verifyButtonClicked(){
+  void verifyButtonClicked(String code){
     loading.value = true;
-    autoRepo!.verifyCode(forgetEmailController.text,codeController.text).then((value) {
+    autoRepo!.verifyCode(forgetEmailController.text,code).then((value) {
       if(value.statusCode==200){
         Get.offAll(()=>ChangePasswordPage());
         loading.value = false;
