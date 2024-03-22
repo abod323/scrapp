@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:sacrapapp/app/modules/Banners/views/banners_view.dart';
+import 'package:sacrapapp/app/modules/Settings/controllers/settings_controller.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../widget/product_card.dart';
 import '../../../widget/search_textfield.dart';
@@ -18,19 +21,31 @@ class HomeView extends GetView<HomeController> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
+        //whatssap button
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+           //url launch
+           var settingsController=Get.put(SettingsController());
+           var url =Uri.parse('https://wa.me/${settingsController.appsettings![10].value}');
+           launchUrl(url,mode: LaunchMode.externalApplication);
+          },
+          child:  Image.asset('assets/images/whatsapp.png'),
+          backgroundColor: Colors.white,
+        ),
         
-        body: Column(
+        body: ListView(
           children: [
           const SizedBox(height: 20,),
                  
                  SearchTextField(isHome: true),
                  SizedBox(height: 5,),
                  CategoryView(),
-                 
-                 Expanded(
-                
-                    child: ProductCard()),
-                 SizedBox(height: 20,)
+                 Padding(
+                   padding: const EdgeInsets.all(8.0),
+                   child: BannersView(),
+                 ),
+                 ProductCard(),
+                 SizedBox(height: 50,)
           ],
         )
       ),

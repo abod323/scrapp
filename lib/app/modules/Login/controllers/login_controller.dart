@@ -31,6 +31,7 @@ class LoginController extends GetxController {
   var codeController = TextEditingController();
   var newPasswordController = TextEditingController();
   var rePasswordController = TextEditingController();
+  var phoneController=TextEditingController();
 
   final count = 0.obs;
   @override
@@ -55,14 +56,15 @@ class LoginController extends GetxController {
   void loginButtonClicked(){
     
    //check validation
-    if(phone.isEmpty){
-      Get.snackbar('error'.tr, 'phone_empty'.tr,   snackPosition: SnackPosition.BOTTOM,);
+    if(phoneController.text.isEmpty){
+
+      showSnackbar('error'.tr, 'phone_empty'.tr);
       
     }else if(passwordController.text.isEmpty){
-      Get.snackbar('error'.tr, 'password_empty'.tr,   snackPosition: SnackPosition.BOTTOM,);
+      showSnackbar('error'.tr, 'password_empty'.tr);
     }else{
       loading.value = true;
-      autoRepo!.login(email: phone, password: passwordController.text).then((value) {
+      autoRepo!.login(email: phoneController.text.trim(), password: passwordController.text.trim(),login_by: 'phone').then((value) {
         if(value.statusCode==200){
           //save token
           autoRepo!.saveToken(value.body['token']).then((value1) {
@@ -89,7 +91,7 @@ class LoginController extends GetxController {
 
           }
           else{
-            Get.snackbar('error'.tr, value.body['message'],   snackPosition: SnackPosition.BOTTOM,);
+            showSnackbar('error'.tr, value.body['message']);
             loading.value = false;
           }
           
@@ -110,14 +112,14 @@ http.StreamedResponse response = await request.send();
 
 if (response.statusCode == 200) {
   print(await response.stream.bytesToString());
-  Get.snackbar('success'.tr, 'otp_sent_successfully'.tr,snackPosition: SnackPosition.BOTTOM,);
+  showSnackbar('success'.tr, 'otp_sent_successfully'.tr);
   loading.value = false;
   
 }
 else {
   var body= await response.stream.bytesToString();
   var data= jsonDecode(body);
-  Get.snackbar('error'.tr, data['message'],snackPosition: SnackPosition.BOTTOM,);
+  showSnackbar('error'.tr, data['message']);
   loading.value = false;
 }
 
@@ -131,7 +133,7 @@ else {
         Get.to(()=>VerfiyPage(isForgetPassword: true,phone:forgetEmailController.text,));
         loading.value = false;
       }else{
-        // Get.snackbar('error'.tr, value.body['message'],snackPosition: SnackPosition.BOTTOM,);
+        showSnackbar('error'.tr, value.body['message']);
         loading.value = false;
       }
     });
@@ -144,7 +146,7 @@ else {
         Get.offAll(()=>ChangePasswordPage());
         loading.value = false;
       }else{
-        Get.snackbar('error'.tr, value.body['message'],snackPosition: SnackPosition.BOTTOM,);
+        showSnackbar('error'.tr, value.body['message']);
         loading.value = false;
       }
     });
@@ -162,7 +164,7 @@ http.StreamedResponse response = await request.send();
 if (response.statusCode == 200) {
   print(await response.stream.bytesToString());
  //show snackbar
-  Get.snackbar('success'.tr, 'otp_verified_successfully'.tr,snackPosition: SnackPosition.BOTTOM,);
+ showSnackbar('success'.tr, 'otp_verified_successfully'.tr);
   Get.offAll(()=>LoginView());
   loading.value = false;
 
@@ -173,7 +175,7 @@ else {
   var body= await response.stream.bytesToString();
   var data= jsonDecode(body);
  //show snackbar
-  Get.snackbar('error'.tr, data['message'],snackPosition: SnackPosition.BOTTOM,);
+  showSnackbar('error'.tr, data['message']);
   loading.value = false;
 }
 
@@ -186,9 +188,9 @@ else {
 
           Get.offAll(()=>LoginView());
           loading.value = false;
-       Get.snackbar('success'.tr, 'password_changed_successfully'.tr,snackPosition: SnackPosition.BOTTOM,);
+      showSnackbar('success'.tr, 'password_changed_successfully'.tr);
         }else{
-          Get.snackbar('error'.tr, value.body['message'],snackPosition: SnackPosition.BOTTOM,);
+         showSnackbar('error'.tr, value.body['message']);
           loading.value = false;
         }
       });

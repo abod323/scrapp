@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sacrapapp/app/data/repository/order_repo.dart';
 import 'package:sacrapapp/app/data/repository/settings_repo.dart';
+import 'package:sacrapapp/app/modules/Loction/controllers/loction_controller.dart';
 import 'package:sacrapapp/app/modules/Login/views/login_view.dart';
 import 'package:sacrapapp/app/util/alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,6 +28,11 @@ class CartController extends GetxController {
   var min_price=''.obs;
   var payment_method='cash'.tr;
   var vehicle_type='car'.tr;
+  var address='';
+  var lat='';
+  var log ='';
+  // Position? position;
+var location_controller = Get.put(LoctionController());
   @override
   void onInit() {
     super.onInit();
@@ -239,7 +245,13 @@ Future<void> deleteProductFromCart(int productId) async {
   Future<void> placeOrder(String statu,bool ridIt) async {
     place_loading.value = true;
     
-    //CHECK MIN ORDER PRICE
+    if(location_controller.currentAddress.isEmpty){
+      Get.showSnackbar(GetSnackBar(
+          message: 'select_location_wait'.tr,
+          duration: Duration(seconds: 3),
+        ));
+           place_loading.value = false;
+    }else{
     
     if(total_price>=int.parse(Get.find<SharedPreferences>().getString('min_order_price').toString())||statu!=''){
       //check max order price
@@ -253,7 +265,8 @@ Future<void> deleteProductFromCart(int productId) async {
         //place order
         await Get.find<OrderRepo>().placeOrder(
         payment_method.toLowerCase()=='cash'?'cash on delivery':'bank transfer',vehicle_type.toLowerCase()=='car'?'car':vehicle_type.toLowerCase()=='truck'?'truck':vehicle_type.toLowerCase()=='motorcycle'?'motorcycle':'pick_up',
-        statu,total_price.value,cart!
+        statu,double.parse(min_price.value.toString())>total_price.value?0:total_price.value
+        ,cart!,location_controller.currentAddress.value,location_controller.log.value,location_controller.lat.value
         ).then((value) {
           print(value.body);
           if (value.statusCode == 200) {
@@ -291,6 +304,7 @@ Future<void> deleteProductFromCart(int productId) async {
     total_price.toString(),true,2
     );
         place_loading.value = false;
+    }
     }
   }
 

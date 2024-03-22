@@ -120,6 +120,8 @@ class MapSelectState extends State<MapSelect> {
                   print(value[0].toJson());
                   
                     location_controller.currentAddress.value = value[0].country!+','+value[0].administrativeArea!+','+value[0].locality!;
+                    location_controller.lat.value = _kGooglePlex!.target.latitude.toString();
+                    location_controller.log.value = _kGooglePlex!.target.longitude.toString();
                 
                 });
               },

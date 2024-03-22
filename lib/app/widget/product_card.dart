@@ -25,11 +25,15 @@ class ProductCard extends StatelessWidget {
 ):
      
       controller.products.isEmpty?
-      Center(child: Text("No Products Found",style: TextStyle(fontSize: 20),)):
+      Container(
+         height: 600,
+        child: Center(child: Text("No Products Found",style: TextStyle(fontSize: 20),))):
       Container(
      
         child: ListView.builder(
           itemCount: controller.products.length,
+          physics: NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
           itemBuilder:
         (context, index) {
          return  Padding(
@@ -171,43 +175,7 @@ class ProductCard extends StatelessWidget {
                             ),),
                             GestureDetector(
                               onTap: () {
-                                // setState(() {
-                                //   // cartController.cartlodding.value=true;
-                                //   quantity++;
-                                //   cartController.total_price.value=cartController.total_price.value+price;
-                                //   cartController.cartRepo.updateQuantity(widget.CartId, quantity).then((value) => cartController.cartlodding.value=false);
-                                // });
-                               //check if 0
                                 
-                                  //add to cart
-                                  //  cartController.cartlodding.value=true;
-                                  // cartController.cart!.cart.add(cart.CartElement(
-                                  //   createdAt: DateTime.now(),
-                                  //   id: 0,
-                                  //   productId: controller.products[index].id,
-                                  //   product: cart.Products(
-                                  //     categoryId:controller.products[index].categoryId,
-                                  //     description: controller.products[index].descriptionEn,
-                                  //     id: controller.products[index].id,
-                                  //     image: controller.products[index].image,
-                                  //     name: controller.products[index].titleEn,
-                                  //     nameAr: controller.products[index].titleAr,
-                                  //     price: controller.products[index].price,
-                                     
-                                  //     status: int.parse(controller.products[index].status.toString()),
-                                  //     updatedAt: controller.products[index].updatedAt,
-                                  //     createdAt: controller.products[index].createdAt,
-                                  //     subcategoryId:1,
-                                  //     descriptionAr: controller.products[index].descriptionAr,
-                                  //     descriptionBn: controller.products[index].descriptionBang,
-                                  //     descriptionUr: controller.products[index].descriptionUrdo
-                                  //   ),
-                                  //   quantity: 1,
-                                  //   userId: 0,
-                                  //   updatedAt: DateTime.now(),
-                                  //   price: double.parse(controller.products[index].price.toString(),
-                                  //   )
-                                  // ));
                                      if(cartController.getQuantity(controller.products[index].id).value<=0){
                                        cartController.addToCart(
                                     cart.CartElement(
@@ -277,6 +245,8 @@ class ProductCard extends StatelessWidget {
 
 
 }
+
+
 class ShimmerProductList extends StatelessWidget {
   final int itemCount;
 

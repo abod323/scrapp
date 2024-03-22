@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../data/model/app_settings.dart';
@@ -34,7 +36,7 @@ class SettingsController extends GetxController {
   void onClose() {
     super.onClose();
   }
-
+ 
   //logout
   void logout() {
     //SHOW CONFIRM DIALOG

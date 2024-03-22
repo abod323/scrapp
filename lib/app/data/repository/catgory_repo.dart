@@ -20,7 +20,7 @@ class CategoryRepo {
       final List<dynamic> categories = catgoriesFromJson(response.body);
       print(categories.length);
       //add all 
-      categories.insert(0, Catgories(subCatgories: [],image: 'list.png'
+      categories.insert(0, Catgories(subCatgories: [],image: 'images.png'
       ,id: 0, nameEn: "All",createdAt: DateTime.now(), updatedAt: DateTime.now(), nameAr: "الكل",));
       return categories as List<Catgories>;
     } else {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:sacrapapp/app/modules/Login/views/login_view.dart';
+
 
 import '../controllers/on_bording_controller.dart';
 
@@ -21,8 +21,8 @@ class OnBordingView extends GetView<OnBordingController> {
               onPressed: () {
                    controller.saveFirstTime();
               },
-              child: const Text(
-                'Skip',
+              child:  Text(
+                'skip'.tr,
                 style: TextStyle(
                   color: Colors.black,
                 ),
@@ -85,7 +85,7 @@ class OnBordingView extends GetView<OnBordingController> {
                 }
               },
               child:  Obx(() => Text(
-                controller.index.value == 2 ? 'Start' : 'Next',
+                controller.index.value == 2 ? 'start'.tr : 'next'.tr,
                 style: TextStyle(
                   color: Colors.black,
                 ),
@@ -101,13 +101,13 @@ class OnBordingView extends GetView<OnBordingController> {
         children: [
           Container(
            
-            child: SingleChildScrollView(child:onBoardingItem('assets/images/on_board_3.png', 'onboarding_title1'.tr, 'onboarding_subtitle1'.tr),)
+            child: SingleChildScrollView(child:onBoardingItem(Get.locale!.languageCode=='en'?'assets/images/on_board_en_1.png':'assets/images/on_board_ar_1.png', 'onboarding_title1'.tr, 'onboarding_subtitle1'.tr),)
           ),
           Container(
-            child: SingleChildScrollView(child:onBoardingItem('assets/images/on_board_2.png', 'onboarding_title2'.tr, 'onboarding_subtitle2'.tr),)
+            child: SingleChildScrollView(child:onBoardingItem(Get.locale!.languageCode=='en'?'assets/images/on_board_en_2.png':'assets/images/on_board_ar_2.png', 'onboarding_title2'.tr, 'onboarding_subtitle2'.tr),)
           ),
           Container(
-            child: SingleChildScrollView(child:onBoardingItem('assets/images/on_board_1.png', 'onboarding_title3'.tr, 'onboarding_subtitle3'.tr),)
+            child: SingleChildScrollView(child:onBoardingItem(Get.locale!.languageCode=='en'?'assets/images/on_board_en_3.png':'assets/images/on_board_ar_3.png', 'onboarding_title3'.tr, 'onboarding_subtitle3'.tr),)
           ),
         ],
       )
@@ -123,37 +123,36 @@ Widget onBoardingItem(String image, String title, String description) {
       children: [
         Image.asset(
           image,
-          height: 250,
-          width: 250,
+          height: 500,
           fit: BoxFit.fill,
         ),
     
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            title,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
+        // Padding(
+        //   padding: const EdgeInsets.all(8.0),
+        //   child: Text(
+        //     title,
+        //     textAlign: TextAlign.center,
+        //     style: const TextStyle(
+        //       fontSize: 24,
+        //       fontWeight: FontWeight.bold,
               
-            ),
-          ),
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            description,
-            textAlign: TextAlign.center,
-            style:  TextStyle(
-              fontSize: 16,
-              color: Colors.grey[700],
-            ),
-          ),
-        ),
+        //     ),
+        //   ),
+        // ),
+        // const SizedBox(
+        //   height: 15,
+        // ),
+        // Padding(
+        //   padding: const EdgeInsets.all(8.0),
+        //   child: Text(
+        //     description,
+        //     textAlign: TextAlign.center,
+        //     style:  TextStyle(
+        //       fontSize: 16,
+        //       color: Colors.grey[700],
+        //     ),
+        //   ),
+        // ),
       ],
     ),
   );

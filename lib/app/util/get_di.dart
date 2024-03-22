@@ -1,5 +1,7 @@
 //get di
 import 'package:get/get.dart';
+import 'package:sacrapapp/app/data/repository/banners_repo.dart';
+import 'package:sacrapapp/app/modules/Banners/controllers/banners_controller.dart';
 import 'package:sacrapapp/app/modules/Settings/controllers/settings_controller.dart';
 import 'package:sacrapapp/app/modules/onBording/controllers/on_bording_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -37,6 +39,8 @@ class AppDi {
     Get.put<CartRepo>(CartRepo(apiClinet: Get.find(), prefs: Get.find()));
     Get.put<SettingsRepo>(SettingsRepo(apiClinet: Get.find(), prefs: Get.find()));
     Get.put<OrderRepo>(OrderRepo(apiClinet: Get.find(), prefs: Get.find()));
+    //banners
+    Get.put<BannerRepo>(BannerRepo(apiClinet: Get.find(), prefs: Get.find()));
   
 
     //controller
@@ -59,6 +63,8 @@ class AppDi {
     Get.lazyPut<CustomSearchController>(() => CustomSearchController());
     //location
     Get.lazyPut<LoctionController>(() => LoctionController());
+    //banner
+    Get.lazyPut<BannersController>(() => BannersController());
 
 
 
@@ -74,7 +80,8 @@ class AppDi {
   static String getLocale() {
     final sharedPreferences = Get.find<SharedPreferences>();
     if (sharedPreferences.getString('languageCode') == null) {
-      return 'en';
+  
+      return Get.deviceLocale!.languageCode == 'en' ? 'en' : 'ar';
     } else {
       return sharedPreferences.getString('languageCode')!;
     }

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:sacrapapp/app/data/model/orders.dart';
+import 'package:sacrapapp/app/modules/Settings/controllers/settings_controller.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../data/repository/auth_repo.dart';
 import '../../../widget/custom_button.dart';
@@ -16,6 +18,17 @@ class OrderView extends GetView<OrderController> {
   Widget build(BuildContext context) {
   
     return Scaffold(
+        //whatssap button
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+           //url launch
+           var settingsController=Get.put(SettingsController());
+           var url =Uri.parse('https://wa.me/${settingsController.appsettings![10].value}');
+           launchUrl(url,mode: LaunchMode.externalApplication);
+          },
+          child:  Image.asset('assets/images/whatsapp.png'),
+          backgroundColor: Colors.white,
+        ),
       appBar:  AppBar(
         title: Text('my_orders'.tr,style: robotoBold.copyWith(color: Colors.black)),
         centerTitle: true,

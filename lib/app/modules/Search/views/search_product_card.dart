@@ -219,7 +219,6 @@ class SearchProductCard extends StatelessWidget {
                                     name: item.titleEn,
                                     nameAr: item.titleAr,
                                     price: item.price,
-                                    
                                     status: int.parse(item.status.toString()),
                                     updatedAt: item.updatedAt,
                                     createdAt: item.createdAt,

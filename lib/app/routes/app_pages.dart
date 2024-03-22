@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/Banners/bindings/banners_binding.dart';
+import '../modules/Banners/views/banners_view.dart';
 import '../modules/Cart/bindings/cart_binding.dart';
 import '../modules/Cart/views/cart_view.dart';
 import '../modules/Category/bindings/category_binding.dart';
@@ -74,6 +76,11 @@ class AppPages {
       name: _Paths.PROFILE,
       page: () => const ProfileView(),
       binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.BANNERS,
+      page: () => const BannersView(),
+      binding: BannersBinding(),
     ),
   ];
 }

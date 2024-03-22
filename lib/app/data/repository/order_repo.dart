@@ -34,7 +34,7 @@ final ApiClinet apiClinet;
   }
 
   //place order
-  Future placeOrder(String payment_method,String vehicle_type,String status,double total,Cart cart) async {
+  Future placeOrder(String payment_method,String vehicle_type,String status,double total,Cart cart,String address,String log,String lat) async {
     //get products id and quantity
     List<Map<String, dynamic>> products = [];
     cart.cart.forEach((element) {
@@ -49,7 +49,10 @@ final ApiClinet apiClinet;
     'vehicle_type': vehicle_type,
     'total': total,
     'products': jsonEncode(products),
-    'status':status
+    'status':status,
+    'address':address,
+    'log':log,
+    'lat':lat
     }
     ,headers: {
        "Content-Type": "application/json",

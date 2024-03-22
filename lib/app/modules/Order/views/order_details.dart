@@ -270,6 +270,10 @@ class _OrderDetailsState extends State<OrderDetails> {
                                                               .orderDetails!
                                                               .user
                                                               .customer
+                                                              .phone==''?'-' :orderController
+                                                              .orderDetails!
+                                                              .user
+                                                              .customer
                                                               .phone,
                                                           style: robotoRegular
                                                               .copyWith(
@@ -303,9 +307,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                                       Text(
                                                           orderController
                                                               .orderDetails!
-                                                              .user
-                                                              .customer
-                                                              .address,
+                                                              .order.address,
                                                           style: robotoRegular
                                                               .copyWith(
                                                                   color: Colors

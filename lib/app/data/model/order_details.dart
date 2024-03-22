@@ -42,6 +42,7 @@ class Order {
     String paymentMethod;
     double total;
     String status;
+    String address;
     DateTime updatedAt;
     DateTime createdAt;
     String vehicleType;
@@ -53,6 +54,7 @@ class Order {
         required this.paymentMethod,
         required this.total,
         required this.status,
+        required this.address,
         required this.updatedAt,
         required this.createdAt,
         required this.vehicleType,
@@ -65,6 +67,7 @@ class Order {
         paymentMethod: json["payment_method"],
         total: double.parse(json["total"].toString()),
         status: json["status"],
+        address: json["address"]??'',
         updatedAt: DateTime.parse(json["updated_at"]),
         createdAt: DateTime.parse(json["created_at"]),
         vehicleType: json["vehicle_type"],
@@ -76,6 +79,7 @@ class Order {
         "user_id": userId,
         "payment_method": paymentMethod,
         "total": total,
+        'address':address,
         "status": status,
         "updated_at": updatedAt.toIso8601String(),
         "created_at": createdAt.toIso8601String(),

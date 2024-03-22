@@ -5,6 +5,10 @@ import 'package:get/get.dart';
 import 'package:phone_text_field/phone_text_field.dart';
 import 'package:sacrapapp/app/modules/Home/views/home_view.dart';
 import 'package:sacrapapp/app/modules/Login/views/forget_password.dart';
+import 'package:sacrapapp/app/modules/Login/widgets/custom_clippers/index.dart';
+import 'package:sacrapapp/app/modules/Login/widgets/header.dart';
+import 'package:sacrapapp/app/modules/Login/widgets/login_form.dart';
+import 'package:sacrapapp/app/util/app_constant.dart';
 
 import '../../../routes/app_pages.dart';
 import '../../../util/get_di.dart';
@@ -16,182 +20,172 @@ import '../../Home/views/nav_home.dart';
 import '../../Register/views/register_view.dart';
 import '../controllers/login_controller.dart';
 
-class LoginView extends GetView<LoginController> {
+class LoginView extends StatefulWidget{
+  
   const LoginView({Key? key}) : super(key: key);
+
+  @override
+  State<LoginView> createState() => _LoginViewState();
+}
+
+class _LoginViewState extends State<LoginView> with SingleTickerProviderStateMixin{
+   late final AnimationController _animationController;
+  late final Animation<double> _headerTextAnimation;
+  late final Animation<double> _formElementAnimation;
+  late final Animation<double> _whiteTopClipperAnimation;
+  late final Animation<double> _blueTopClipperAnimation;
+  late final Animation<double> _greyTopClipperAnimation;
+
+  final controller = Get.put(LoginController());
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: kLoginAnimationDuration,
+    );
+
+    final fadeSlideTween = Tween<double>(begin: 0.0, end: 1.0);
+    _headerTextAnimation = fadeSlideTween.animate(CurvedAnimation(
+      parent: _animationController,
+      curve: const Interval(
+        0.0,
+        0.6,
+        curve: Curves.easeInOut,
+      ),
+    ));
+    _formElementAnimation = fadeSlideTween.animate(CurvedAnimation(
+      parent: _animationController,
+      curve: const Interval(
+        0.7,
+        1.0,
+        curve: Curves.easeInOut,
+      ),
+    ));
+
+    final clipperOffsetTween = Tween<double>(
+      begin: 200,
+      end: 0.0,
+    );
+    _blueTopClipperAnimation = clipperOffsetTween.animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: const Interval(
+          0.2,
+          0.7,
+          curve: Curves.easeInOut,
+        ),
+      ),
+    );
+    _greyTopClipperAnimation = clipperOffsetTween.animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: const Interval(
+          0.35,
+          0.7,
+          curve: Curves.easeInOut,
+        ),
+      ),
+    );
+    _whiteTopClipperAnimation = clipperOffsetTween.animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: const Interval(
+          0.5,
+          0.7,
+          curve: Curves.easeInOut,
+        ),
+      ),
+    );
+
+    _animationController.forward();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: CustomAppBar.buildAppBar(context, 'login'.tr,
-            isShowBackButton: Get.arguments != null && Get.arguments[0] == true
-                ? true
-                : false),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child:
-                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              const SizedBox(
-                height: 40,
+  return Scaffold(
+    resizeToAvoidBottomInset: false,
+    backgroundColor: kWhite,
+    body: Stack(
+      children: <Widget>[
+        
+        AnimatedBuilder(
+          animation: _whiteTopClipperAnimation,
+          builder: (_, Widget? child) {
+            return ClipPath(
+              clipper: WhiteTopClipper(
+                yOffset: _whiteTopClipperAnimation.value,
               ),
-              Text(
-                'FADH',
-                style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.w900,
-                    color: Colors.amber),
+              child: child,
+            );
+          },
+          child: Container(color: kGrey),
+        ),
+        AnimatedBuilder(
+          animation: _greyTopClipperAnimation,
+          builder: (_, Widget? child) {
+            return ClipPath(
+              clipper: GreyTopClipper(
+                yOffset: _greyTopClipperAnimation.value,
               ),
-              const SizedBox(
-                height: 20,
+              child: child,
+            );
+          },
+          child: Container(color: kBlue),
+        ),
+        AnimatedBuilder(
+          animation: _blueTopClipperAnimation,
+          builder: (_, Widget? child) {
+            return ClipPath(
+              clipper: BlueTopClipper(
+                yOffset: _blueTopClipperAnimation.value,
               ),
-              // Padding(
-              //   padding: const EdgeInsets.all(8.0),
-              //   child: CustomTextfield(
-              //     borderWidth: 1,
-              //     controller: controller.emailController,
-              //     hint: 'email'.tr,
-              //     label: 'email'.tr,
-              //     contentPadding: 10,
-              //     prefixIconPadding: 10,
-              //   ),
-              // ),
-            Directionality(
-              textDirection: TextDirection.ltr,
-
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  width: 400,
-                  child: PhoneTextField(
-                       textAlign: TextAlign.right,
-
-                       textStyle: robotoRegular,
-                        locale: Get.locale!.languageCode=='en'?Locale('en'):Locale('ar'),
-                        invalidNumberMessage:'invalid_number'.tr,
-                        decoration:  InputDecoration(
-                          
-                          
-                          contentPadding: EdgeInsets.all(10),
-                         border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                            borderSide: BorderSide(),
-                          ),
-                         
-                          labelText: 'phone'.tr,
-                        ),
-                        searchFieldInputDecoration:  InputDecoration(
-                          
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                            borderSide: BorderSide(),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                            borderSide: BorderSide(),
-                          ),
-                          suffixIcon: Icon(Icons.search),
-                          hintText: Get.locale!.languageCode=='en'?'Search Country':'ابحث عن الدوله',
-                        ),
-                        dialogTitle:Get.locale!.languageCode=='en'?'Search Country':'ابحث عن الدوله',
-                        initialCountryCode: "SA",
-                        
-                        onChanged: (phone) {
-                          controller.phone=phone.completeNumber;
-                          print(phone.completeNumber);
-                        },
-                      ),
-                ),
-              ),
-            ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CustomTextfield(
-                  borderWidth: 1,
-                  hint: 'password'.tr,
-                  controller: controller.passwordController,
-                  label: 'password'.tr,
-                  contentPadding: 10,
-                  prefixIconPadding: 10,
-                  width: 400,
-                  isObscure: true,
-                  isPassword: true,
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              CustomButton(
-                width: 350,
-                isEnable: !controller.loading.value,
-                radius: 25,
-                fontSize: 18,
-                isLoding: controller.loading,
-                text: 'login'.tr,
-                onPressed: () {
-                  controller.loginButtonClicked();
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Get.arguments != null && Get.arguments[0] == true
+              child: child,
+            );
+          },
+          child: Container(color: kWhite),
+        ),
+        //top right skip
+        Get.arguments != null && Get.arguments[0] == true
                   ? Container()
                   :
-                  //guest login text button
-                  TextButton(
+        SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(kPaddingM),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                TextButton(
                       onPressed: () {
                         controller.autoRepo!.saveUserEmailAndName('', 'Guest');
                         Get.offAll(() => NavHome());
                         AppDi.init();
                       },
-                      child: Text('continue_as_guest'.tr,
-                          style: robotoRegular.copyWith(
-                              color: Colors.amber,
-                              ))),
-
-              const SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextButton(
-                        onPressed: () {
-                          Get.to(() => ForgetPassword());
-                        },
-                        child: Text('forgot_password'.tr,
-                            style: robotoRegular.copyWith(
-                                color: Colors.grey[600],
-                                decoration: TextDecoration.underline))),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              RichText(
-                  text: TextSpan(
-                      text: 'dont_have_account'.tr,
-                      style: robotoRegular.copyWith(color: Colors.grey[600]),
-                      children: [
-                    TextSpan(
-                        text: ' ' + 'sign_now'.tr,
+                      child: Text(
+                        'skip'.tr,
                         style: robotoRegular.copyWith(
                             color: Colors.amber[600],
-                            decoration: TextDecoration.underline),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            Get.to(() => RegisterView());
-                          })
-                  ])),
-
-              const SizedBox(
-                height: 20,
-              ),
-              //change language
-              Obx(() => controller.language.value == 'en'
+                            ),
+                      ))
+              ],
+            ),
+          ),
+        ),
+        
+        //top left 
+        SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(kPaddingM),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Obx(() => controller.language.value == 'en'
                   ? TextButton(
                       onPressed: () {
                         controller.language.value = 'ar';
@@ -201,7 +195,7 @@ class LoginView extends GetView<LoginController> {
                         'عربي',
                         style: robotoRegular.copyWith(
                             color: Colors.amber[600],
-                            decoration: TextDecoration.underline),
+                            ),
                       ))
                   : TextButton(
                       onPressed: () {
@@ -212,10 +206,29 @@ class LoginView extends GetView<LoginController> {
                         'English',
                         style: robotoRegular.copyWith(
                             color: Colors.amber[600],
-                            decoration: TextDecoration.underline),
-                      )))
-            ]),
+                            ),
+                      ))),
+            
+              ],
+            ),
           ),
-        ));
+        ),
+          
+        
+        SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: kPaddingL),
+            child: Column(
+              children: <Widget>[
+                Header(animation: _headerTextAnimation),
+                SizedBox(height: 200 * 0.9),
+                Expanded(child: SingleChildScrollView(child: LoginForm(animation: _formElementAnimation))),
+              ],
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
   }
 }

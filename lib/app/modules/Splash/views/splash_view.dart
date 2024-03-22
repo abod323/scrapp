@@ -51,7 +51,7 @@ ApiClinet apiClinet = Get.find<ApiClinet>();
          
             // Image.asset('assets/images/logo.png',height: 200,width: 200,),
             const SizedBox(height: 20,),
-            const Text('FADH',style: TextStyle(fontSize: 30,fontWeight:FontWeight.bold,color:Colors.amber),),
+            // const Text('',style: TextStyle(fontSize: 30,fontWeight:FontWeight.bold,color:Colors.amber),),
             //beutifull progress
             const SizedBox(height: 20,),
             const CircularProgressIndicator(

@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 import 'package:sacrapapp/app/data/repository/auth_repo.dart';
 import 'package:sacrapapp/app/modules/Cart/views/payment_type.dart';
 import 'package:sacrapapp/app/modules/Cart/views/vehicle_type.dart';
+import 'package:sacrapapp/app/modules/Settings/controllers/settings_controller.dart';
 import 'package:sacrapapp/app/widget/user_address.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../widget/custom_button.dart';
 import '../../../widget/styles.dart';
@@ -20,6 +22,17 @@ class CartScreen extends GetView<CartController>{
   Widget build(BuildContext context) {
     
     return Scaffold(
+        //whatssap button
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+           //url launch
+            var settingsController=Get.put(SettingsController());
+           var url =Uri.parse('https://wa.me/${settingsController.appsettings![10].value}');
+           launchUrl(url,mode: LaunchMode.externalApplication);
+          },
+          child:  Image.asset('assets/images/whatsapp.png'),
+          backgroundColor: Colors.white,
+        ),
       bottomNavigationBar://contuine button
       Obx(() =>controller.cartlodding.value||controller.cart==null||controller.cart!.cart.isEmpty?
       SizedBox(height:0,):
@@ -177,13 +190,16 @@ class CartScreen extends GetView<CartController>{
                          
                              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                               Text('subtotal'.tr,style: robotoRegular,),
-                              Text(controller.total_price.value.toStringAsFixed(2)+' '+'SR'.tr,style:robotoRegular.copyWith(fontSize: 14)),
+                              if(controller.total_price.value<double.parse(controller.min_price.value.toString()))
+                              Text('0.00 '+'SR'.tr,style:robotoRegular.copyWith(fontSize: 14)),
+                              if(controller.total_price.value>=double.parse(controller.min_price.value.toString()))
+                              Text(controller.total_price.value.toStringAsFixed(2)+' '+'SR'.tr,style:robotoRegular.copyWith(fontSize: 14,color: Colors.green)),
                             ]),
                             ],
                            ),
                          ),
 
-                          SizedBox(height: 10,)
+                          SizedBox(height: 50,)
 
 
                         ]),

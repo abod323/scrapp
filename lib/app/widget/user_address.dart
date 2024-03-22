@@ -59,11 +59,13 @@ var location_controller = Get.put(LoctionController());
               SharedPreferences.getInstance().then((value1) {
                 if(value1.getString('lat')==null && value1.getString('lng')==null){
                   var address = placemarkFromCoordinates(value.latitude, value.longitude);
-                  address.then((value) {
+                  address.then((value5) {
                   //check mounted
                   if(mounted){
                     setState(() {
-                      location_controller.currentAddress.value  = value[0].country!+','+value[0].administrativeArea!+','+value[0].locality!;
+                      location_controller.currentAddress.value  = value5[0].country!+','+value5[0].administrativeArea!+','+value5[0].locality!;
+                      location_controller.lat.value = value.latitude.toString();
+                      location_controller.log.value = value.longitude.toString();
                     });
                   }
                   });
@@ -75,6 +77,8 @@ var location_controller = Get.put(LoctionController());
                   if(mounted){
                     setState(() {
                       location_controller.currentAddress.value  = value[0].country!+','+value[0].administrativeArea!+','+value[0].locality!;
+                      location_controller.lat.value = value1.getString('lat')!;
+                      location_controller.log.value = value1.getString('lng')!;
                     });
                   }
                   });

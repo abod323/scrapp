@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../util/app_constant.dart';
@@ -16,8 +18,8 @@ class AuthRepo {
     return await apiClient.postData(AppConstants.REGISTER_URI, signUpBody.toJson());
   }
 
-  Future<Response> login({required String email,required String password}) async {
-    return await apiClient.postData(AppConstants.LOGIN_URI, {"phone": email, "password": password});
+  Future<Response> login({required String email,required String password ,String login_by='google',String? name}) async {
+    return await apiClient.postData(AppConstants.LOGIN_URI, {"phone": email,'email':email, "password": password , "login_by":login_by,"name":name});
   }
 
   //get customer info
@@ -80,11 +82,16 @@ class AuthRepo {
   Future<Response> resetPassword(String token,String password) async {
     return await apiClient.postData(AppConstants.RESET_PASSWORD_URI, {"token": token,"password":password});
   }
-
+ //logout
+  Future<void> signOut() async {
+    await GoogleSignIn().signOut();
+    await FirebaseAuth.instance.signOut();
+  }
  
 
   //logout
   Future<bool> logout() async {
+    await signOut();
     return await sharedPreferences.remove('token');
   }
   //is login

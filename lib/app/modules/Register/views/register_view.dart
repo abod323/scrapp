@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:phone_text_field/phone_text_field.dart';
+import 'package:sacrapapp/app/modules/Login/widgets/custom_clippers/index.dart';
+import 'package:sacrapapp/app/modules/Login/widgets/header.dart';
+import 'package:sacrapapp/app/modules/Register/views/register_form.dart';
 import 'package:sacrapapp/app/modules/Settings/controllers/settings_controller.dart';
+import 'package:sacrapapp/app/util/app_constant.dart';
 import 'package:sacrapapp/app/widget/styles.dart';
 import 'package:sacrapapp/app/widget/web_view.dart';
 
@@ -12,201 +16,151 @@ import '../../../widget/custom_textfield.dart';
 import '../../../widget/terms.dart';
 import '../controllers/register_controller.dart';
 
-class RegisterView extends GetView<RegisterController> {
+class RegisterView extends StatefulWidget {
+  @override
+  State<RegisterView> createState() => _RegisterViewState();
+}
 
-   RegisterView({Key? key}) : super(key: key);
-  var registerController=Get.put(RegisterController());
+class _RegisterViewState extends State<RegisterView> with SingleTickerProviderStateMixin{
+late final AnimationController _animationController;
+
+  late final Animation<double> _headerTextAnimation;
+
+  late final Animation<double> _formElementAnimation;
+
+  late final Animation<double> _whiteTopClipperAnimation;
+
+  late final Animation<double> _blueTopClipperAnimation;
+
+  late final Animation<double> _greyTopClipperAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: kLoginAnimationDuration,
+    );
+
+    final fadeSlideTween = Tween<double>(begin: 0.0, end: 1.0);
+    _headerTextAnimation = fadeSlideTween.animate(CurvedAnimation(
+      parent: _animationController,
+      curve: const Interval(
+        0.0,
+        0.6,
+        curve: Curves.easeInOut,
+      ),
+    ));
+    _formElementAnimation = fadeSlideTween.animate(CurvedAnimation(
+      parent: _animationController,
+      curve: const Interval(
+        0.7,
+        1.0,
+        curve: Curves.easeInOut,
+      ),
+    ));
+
+    final clipperOffsetTween = Tween<double>(
+      begin: 200,
+      end: 0.0,
+    );
+    _blueTopClipperAnimation = clipperOffsetTween.animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: const Interval(
+          0.2,
+          0.7,
+          curve: Curves.easeInOut,
+        ),
+      ),
+    );
+    _greyTopClipperAnimation = clipperOffsetTween.animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: const Interval(
+          0.35,
+          0.7,
+          curve: Curves.easeInOut,
+        ),
+      ),
+    );
+    _whiteTopClipperAnimation = clipperOffsetTween.animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: const Interval(
+          0.5,
+          0.7,
+          curve: Curves.easeInOut,
+        ),
+      ),
+    );
+
+    _animationController.forward();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:CustomAppBar.buildAppBar(context, 'register'.tr),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-          
-            children: [
-            const SizedBox(height: 40,),
-            Text('register'.tr,style: TextStyle(fontSize: 30,fontWeight:FontWeight.bold,color:Colors.amber),),
-            const SizedBox(height: 20,),
-           Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CustomTextfield(
-                  borderWidth: 1,
-                  hint: 'name'.tr,
-                  label: 'name'.tr,
-                  controller: registerController.nameController,
-                  contentPadding: 10,
-                  prefixIconPadding: 10,
-                  
+      resizeToAvoidBottomInset: false,
+      backgroundColor: kWhite,
+      body: Stack(
+        children: <Widget>[
+          AnimatedBuilder(
+            animation: _whiteTopClipperAnimation,
+            builder: (_, Widget? child) {
+              return ClipPath(
+                clipper: WhiteTopClipper(
+                  yOffset: _whiteTopClipperAnimation.value,
                 ),
-              ),
-           Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CustomTextfield(
-                  borderWidth: 1,
-                  hint: 'email'.tr,
-                  label: 'email'.tr,
-                  controller: registerController.emailController,
-                  contentPadding: 10,
-                  prefixIconPadding: 10,
-                  
+                child: child,
+              );
+            },
+            child: Container(color: kGrey),
+          ),
+          AnimatedBuilder(
+            animation: _greyTopClipperAnimation,
+            builder: (_, Widget? child) {
+              return ClipPath(
+                clipper: GreyTopClipper(
+                  yOffset: _greyTopClipperAnimation.value,
                 ),
-              ),
-              //phone
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                width: 400,
-                child: PhoneTextField(
-                   textStyle: robotoRegular,
-                    invalidNumberMessage: 'invalid_number'.tr,
-                     textAlign: TextAlign.right,
-                      locale: const Locale('ar'),
-                      
-                      decoration:  InputDecoration(
-                        
-                        
-                        contentPadding: EdgeInsets.all(10),
-                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                          borderSide: BorderSide(),
-                        ),
-                       
-                        labelText: 'phone'.tr,
-                      ),
-                      searchFieldInputDecoration: const InputDecoration(
-                        
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                          borderSide: BorderSide(),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                          borderSide: BorderSide(),
-                        ),
-                        suffixIcon: Icon(Icons.search),
-                        hintText: "بحث عن بالاسم او الرمز",
-                      ),
-                      dialogTitle: "اختر الدوله",
-                      initialCountryCode: "SA",
-                      
-                      onChanged: (phone) {
-                        controller.phone=phone.completeNumber;
-                        print(phone.completeNumber);
-                      },
-                    ),
-              ),
-            ),
-                //country
-            Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CustomTextfield(
-                    borderWidth: 1,
-                    hint: 'country'.tr,
-                    label: 'country'.tr,
-                    controller: registerController.countryController,
-                    contentPadding: 10,
-                    prefixIconPadding: 10,
-                    
-                  ),
+                child: child,
+              );
+            },
+            child: Container(color: kBlue),
+          ),
+          AnimatedBuilder(
+            animation: _blueTopClipperAnimation,
+            builder: (_, Widget? child) {
+              return ClipPath(
+                clipper: BlueTopClipper(
+                  yOffset: _blueTopClipperAnimation.value,
                 ),
-            //address
-            Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CustomTextfield(
-                    borderWidth: 1,
-                    hint: 'address'.tr,
-                    label: 'address'.tr,
-                    controller: registerController.addressController,
-                    contentPadding: 10,
-                    prefixIconPadding: 10,
-                    
-                  ),
-                ),
-
-                //city
-            Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CustomTextfield(
-                    borderWidth: 1,
-                    hint: 'city'.tr,
-                    label: 'city'.tr,
-                    controller: registerController.cityController,
-                    contentPadding: 10,
-                    prefixIconPadding: 10,
-                    
-                  ),
-                ),
-            Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CustomTextfield(
-                  borderWidth: 1,
-                  controller:registerController.passwordController,
-                  hint: 'password'.tr,
-                  label: 'password'.tr,
-                  contentPadding: 10,
-                  prefixIconPadding: 10,
-                    isObscure: true,
-                isPassword: true,
-                  
-                ),
-              ),
-           Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CustomTextfield(
-                  borderWidth: 1,
-                  controller:registerController.RepasswordController,
-                  hint: 'confirm_password'.tr,
-                  label: 'confirm_password'.tr,
-                  contentPadding: 10,
-                  prefixIconPadding: 10,
-                    isObscure: true,
-                isPassword: true,
-
-                  
-                 
-                ),
-              ),
-           const SizedBox(height: 20,),
-            //check box
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Obx(() => Checkbox(value: registerController.agree.value, onChanged: (value){
-                    registerController.agree.value=value!;
-                  }),),
-                  Text('agree'.tr,style: robotoRegular.copyWith(fontSize: 15,fontWeight:FontWeight.bold,color:Colors.grey),),
-                  TextButton(onPressed: (){
-                    Get.to(()=>WebViewCustom(
-                      title: "terms_and_conditions".tr,
-                      url: Get.find<SettingsController>().appsettings![1].value,
-                    ));
-                  }, child: Text('terms_and_conditions'.tr,style: robotoRegular.copyWith(fontSize: 15,fontWeight:FontWeight.bold,color:Colors.amber),))
+                child: child,
+              );
+            },
+            child: Container(color: kWhite),
+          ),
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: kPaddingL),
+              child: Column(
+                children: <Widget>[
+                  Header(animation: _headerTextAnimation),
+                  SizedBox(height: 100 * 0.9),
+                  Expanded(child: RegisterForm(animation: _formElementAnimation)),
                 ],
               ),
             ),
-            const SizedBox(height: 15,),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CustomButton(
-                  width:350,
-                  isEnable:!registerController.loading.value,
-                  isLoding: registerController.loading,
-                  radius: 25,
-                  text: 'register'.tr,
-                  onPressed: (){
-                   registerController.RegisterButtonClicked();
-                  },
-                ),
-              ),
-          
-        
-          ]),
-        ),
-      )
+          ),
+        ],
+      ),
     );
   }
 }

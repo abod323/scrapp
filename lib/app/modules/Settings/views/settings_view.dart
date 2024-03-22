@@ -20,7 +20,16 @@ class SettingsView extends GetView<SettingsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     
+       //whatssap button
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+        
+           var url =Uri.parse('https://wa.me/${controller.appsettings![10].value}');
+           launchUrl(url,mode: LaunchMode.externalApplication);
+          },
+          child:  Image.asset('assets/images/whatsapp.png'),
+          backgroundColor: Colors.white,
+        ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: ListView(
@@ -117,6 +126,18 @@ class SettingsView extends GetView<SettingsController> {
                   },
                   leading: const Icon(color:Colors.amber,Icons.description),
                   title: Text("terms_and_conditions".tr,style: robotoRegular.copyWith(fontSize: 18),),
+                  trailing: const Icon(Icons.arrow_forward_ios),
+                ),
+                //privacy policy
+                ListTile(
+                  onTap: (){
+                    Get.to(()=>WebViewCustom(
+                      title: "privacy_policy".tr,
+                      url: controller.appsettings![0].value,
+                    ));
+                  },
+                  leading: const Icon(color:Colors.amber,Icons.privacy_tip),
+                  title: Text("privacy_policy".tr,style: robotoRegular.copyWith(fontSize: 18),),
                   trailing: const Icon(Icons.arrow_forward_ios),
                 ),
                 //logout LISTTILE
