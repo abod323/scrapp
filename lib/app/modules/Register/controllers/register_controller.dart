@@ -6,14 +6,14 @@ import 'package:sacrapapp/app/data/api/api_clinet.dart';
 import 'package:sacrapapp/app/data/model/sign_up.dart';
 import 'package:sacrapapp/app/data/repository/auth_repo.dart';
 import 'package:sacrapapp/app/modules/Home/views/nav_home.dart';
-import 'package:sacrapapp/app/modules/Login/views/login_view.dart';
+
 import 'package:sacrapapp/app/modules/Login/views/verfiy_page.dart';
 import 'package:sacrapapp/app/util/app_constant.dart';
 import 'package:sacrapapp/app/util/get_di.dart';
 
 class RegisterController extends GetxController {
   //TODO: Implement RegisterController
-
+  var language = 'en'.obs;
   final count = 0.obs;
   final agree = false.obs;
   ApiClinet apiClinet = Get.find<ApiClinet>();
@@ -138,19 +138,11 @@ void RegisterButtonClicked(){
   //validation
   if(nameController.text.isEmpty){
    showSnackbar('error'.tr, 'name_empty'.tr);
-  }else if(emailController.text.isEmpty){
-    showSnackbar('error'.tr, 'email_empty'.tr);
   }else if(phoneController.text.isEmpty){
     showSnackbar('error'.tr, 'phone_empty'.tr);
-  }else if(cityController.text.isEmpty){
-    showSnackbar('error'.tr, 'city_empty'.tr);
-  }else if(addressController.text.isEmpty){
-    showSnackbar('error'.tr, 'address_empty'.tr);
   }
   
-  else if(passwordController.text.isEmpty){
-    showSnackbar('error'.tr, 'password_empty'.tr);
-  }
+ 
   else{
     loading.value = true;
     autoRepo.registration(
@@ -160,13 +152,13 @@ void RegisterButtonClicked(){
         phone: phoneController.text,
         password: passwordController.text,
         passwordConfirmation: RepasswordController.text,
-        address: addressController.text,
-        city: cityController.text,
+        address: 'N/A',
+        city: 'N/A',
         country: 'KSA',
       )
     ).then((value) {
       if(value.statusCode==200){
-        Get.offAll(()=>VerfiyPage(isForgetPassword: false,phone:phoneController.text,),transition: Transition.rightToLeft,curve: Curves.easeInCubic,duration: const Duration(milliseconds: 600));
+        Get.offAll(()=>VerfiyPage(isForgetPassword: false,phone:phoneController.text,fromLogin: false),transition: Transition.rightToLeft,curve: Curves.easeInCubic,duration: const Duration(milliseconds: 600));
    
         showSnackbar('success'.tr, 'register_success'.tr);
         loading.value = false;

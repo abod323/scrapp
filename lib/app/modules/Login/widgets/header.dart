@@ -20,23 +20,24 @@ class Header extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-          const Logo(
-            color: kBlue,
-            size: 48.0,
-          ),
-          const SizedBox(height: kSpaceM),
-          FadeSlideTransition(
-            animation: animation,
-            additionalOffset: 0.0,
-
-            child: Text(
+          // const Logo(
+          //   color: kBlue,
+          //   size: 48.0,
+          // ),
+          Text(
               'welcome'.tr,
               style: Theme.of(context)
                   .textTheme
                   .headline5!
                   .copyWith(color: kBlack, fontWeight: kFontWeightBold, fontFamily: kFontFamily),
             ),
-          ),
+          const SizedBox(height: kSpaceM),
+          // FadeSlideTransition(
+          //   animation: animation,
+          //   additionalOffset: 0.0,
+
+          //   child: ,
+          // ),
           // const SizedBox(height: kSpaceS),
           // FadeSlideTransition(
           //   animation: animation,

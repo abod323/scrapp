@@ -58,12 +58,12 @@ class AuthRepo {
 
   //save user email and name
   Future<bool> saveUserEmailAndName(String email,String name) async {
-    await sharedPreferences.setString('email', email);
+    await sharedPreferences.setString('phone', email);
     return await sharedPreferences.setString('name', name);
   }
   //get user email
   String? getUserEmail() {
-    return sharedPreferences.getString('email');
+    return sharedPreferences.getString('phone');
   }
   //get user name
   String? getUserName() {

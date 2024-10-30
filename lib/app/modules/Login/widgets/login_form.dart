@@ -56,40 +56,40 @@ class LoginForm extends StatelessWidget {
             ),
           ),
          
-          SizedBox(height: space),
-          Directionality(
-            textDirection: TextDirection.ltr,
-            child: FadeSlideTransition(
-              animation: animation,
-              additionalOffset: 1 * space,
-              child: CustomInputField(
-                controller: controller.passwordController,
-                isNumber: false,
-                label: 'password'.tr,
-                prefixIcon: Icons.lock,
-                obscureText: true,
-              ),
-            ),
-          ),
-          SizedBox(height: space),  
-          //Forgot password
-          Row(
-            mainAxisAlignment: Get.locale == Locale('ar', 'SA') ? MainAxisAlignment.end : MainAxisAlignment.start,
-            children: <Widget>[
-              TextButton(
-                onPressed: () {
-                    Get.to(() => ForgetPassword());
-                },
-                child: Text(
-                  'forgot_password'.tr,
-                  style: Theme.of(context)
-                      .textTheme
-                      .subtitle1!
-                      .copyWith(color: kBlack.withOpacity(0.5), fontWeight: kFontWeightNormal, fontFamily: kFontFamily),
-                ),
-              ),
-            ],
-          ),
+          // SizedBox(height: space),
+          // Directionality(
+          //   textDirection: TextDirection.ltr,
+          //   child: FadeSlideTransition(
+          //     animation: animation,
+          //     additionalOffset: 1 * space,
+          //     child: CustomInputField(
+          //       controller: controller.passwordController,
+          //       isNumber: false,
+          //       label: 'password'.tr,
+          //       prefixIcon: Icons.lock,
+          //       obscureText: true,
+          //     ),
+          //   ),
+          // ),
+          // SizedBox(height: space),  
+          // //Forgot password
+          // Row(
+          //   mainAxisAlignment: Get.locale == Locale('ar', 'SA') ? MainAxisAlignment.end : MainAxisAlignment.start,
+          //   children: <Widget>[
+          //     TextButton(
+          //       onPressed: () {
+          //           Get.to(() => ForgetPassword());
+          //       },
+          //       child: Text(
+          //         'forgot_password'.tr,
+          //         style: Theme.of(context)
+          //             .textTheme
+          //             .subtitle1!
+          //             .copyWith(color: kBlack.withOpacity(0.5), fontWeight: kFontWeightNormal, fontFamily: kFontFamily),
+          //       ),
+          //     ),
+          //   ],
+          // ),
           
           //space
           SizedBox(height: space),

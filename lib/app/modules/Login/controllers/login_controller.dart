@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sacrapapp/app/data/api/api_clinet.dart';
 import 'package:sacrapapp/app/data/repository/settings_repo.dart';
-import 'package:sacrapapp/app/modules/Home/views/home_view.dart';
+
 import 'package:sacrapapp/app/modules/Home/views/nav_home.dart';
 import 'package:sacrapapp/app/modules/Login/views/login_view.dart';
 //http
@@ -60,35 +60,21 @@ class LoginController extends GetxController {
 
       showSnackbar('error'.tr, 'phone_empty'.tr);
       
-    }else if(passwordController.text.isEmpty){
-      showSnackbar('error'.tr, 'password_empty'.tr);
+    
     }else{
       loading.value = true;
       autoRepo!.login(email: phoneController.text.trim(), password: passwordController.text.trim(),login_by: 'phone').then((value) {
-        if(value.statusCode==200){
-          //save token
-          autoRepo!.saveToken(value.body['token']).then((value1) {
-            if(value1){
-              // Get.offAllNamed(Routes.HOME);
-              loading.value = false;
-             
-              Get.offAll(()=>NavHome());
-              autoRepo!.saveUserEmailAndName(phone, value.body['name']);
-               AppDi.init();
-               passwordController.text='';
-            }
-          });
-        }else{
+        // if(value.statusCode==200){
+        //   //save token
+ 
+        // }else{
           
 
-          if(value.body['code']==100){
-            resendOtpButtonClicked(phone).then((value) { 
-              Get.to(()=>VerfiyPage(isForgetPassword: false,phone: phone,));
+          if(value.body['status']==true){
+            Get.to(()=>VerfiyPage(isForgetPassword: false,phone: phone,fromLogin: true,));
               loading.value = false;
               passwordController.text='';
-            });
             
-
           }
           else{
             showSnackbar('error'.tr, value.body['message']);
@@ -96,7 +82,7 @@ class LoginController extends GetxController {
           }
           
           
-        }
+        // }
       });
     }
   }
@@ -130,7 +116,7 @@ else {
     autoRepo!.forgetPassword(forgetEmailController.text).then((value) {
       print(value.body);
       if(value.statusCode==200){
-        Get.to(()=>VerfiyPage(isForgetPassword: true,phone:forgetEmailController.text,));
+        Get.to(()=>VerfiyPage(isForgetPassword: true,phone:forgetEmailController.text,fromLogin: false,));
         loading.value = false;
       }else{
         showSnackbar('error'.tr, value.body['message']);
@@ -152,34 +138,70 @@ else {
     });
   }
   //verify otp
-  Future<void> verifyWhatsappOtpButtonClicked(int otp) async {
-    loading.value = true;
+Future<void> verifyWhatsappOtpButtonClicked(int otp, bool fromLogin) async {
+  loading.value = true;
 
-var request = http.Request('POST', Uri.parse('${AppConstants.API_BASE_URL+AppConstants.OTP_URI}?otp=$otp'));
+  var request = http.Request('POST', Uri.parse('${AppConstants.API_BASE_URL + AppConstants.OTP_URI}?otp=$otp'));
 
+  http.StreamedResponse response = await request.send();
 
+  if (response.statusCode == 200) {
+    // Get the full response body as a string
+    var responseBody = await response.stream.bytesToString();
+    
+    // Parse the response body to JSON
+    var data = jsonDecode(responseBody);
 
-http.StreamedResponse response = await request.send();
+    // Extract token and name
+    String token = data['token'];
+    String name = data['name'];
+    String phone = data['phone'];
 
-if (response.statusCode == 200) {
-  print(await response.stream.bytesToString());
- //show snackbar
- showSnackbar('success'.tr, 'otp_verified_successfully'.tr);
-  Get.offAll(()=>LoginView());
-  loading.value = false;
+    //clear code
+    codeController.text='';
+    //clear phone
+    phoneController.text='';
+    
 
-}
-else {
+    // Show success snackbar
+    showSnackbar('success'.tr, 'otp_verified_successfully'.tr);
 
-  //print message
-  var body= await response.stream.bytesToString();
-  var data= jsonDecode(body);
- //show snackbar
-  showSnackbar('error'.tr, data['message']);
-  loading.value = false;
-}
+    if (fromLogin) {
+      // Save the token
+      await autoRepo!.saveToken(token).then((value1) {
+        if (value1) {
+          // Perform additional actions after saving token
+          loading.value = false;
+          Get.offAll(() => NavHome());
 
+          // Save user email and name
+          autoRepo!.saveUserEmailAndName(phone, name);
+
+          // Reinitialize app dependencies
+          AppDi.init();
+          
+          // Clear password field
+          passwordController.text = '';
+        }
+      });
+    } else {
+      // Navigate to login view
+      Get.offAll(() => LoginView());
+    }
+    loading.value = false;
+
+  } else {
+    // If the response status code is not 200, handle the error
+
+    var responseBody = await response.stream.bytesToString();
+    var data = jsonDecode(responseBody);
+
+    // Show error snackbar with message from API
+    showSnackbar('error'.tr, data['message']);
+    loading.value = false;
   }
+}
+
   //changePasswordButtonClicked
   void changePasswordButtonClicked(){
     loading.value = true;
